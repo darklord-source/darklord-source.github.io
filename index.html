@@ -3,608 +3,679 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0e1a10">
-<title>Varun & Ishita — Wedding 2026</title>
+<meta name="theme-color" content="#3a1a1a">
+<title>Varun & Ishita · Wedding Invitation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ═══════════════════════════════════════════
-   PALETTE — Deep Forest Green · Ivory · Gold
-═══════════════════════════════════════════ */
 :root {
-  --forest:    #0e1a10;
-  --forest-m:  #162418;
-  --forest-l:  #1e3220;
-  --moss:      #2d4a2f;
-  --sage:      #4a7a4c;
-  --gold:      #c8a84b;
-  --gold-lt:   #e2cc88;
-  --gold-dim:  #8a7030;
-  --ivory:     #faf7ee;
-  --ivory-d:   #f0ead8;
-  --parchment: #e8dfc0;
-  --text-dk:   #1a2a1c;
-  --text-md:   #3a5a3c;
-  --text-lt:   #d8c89a;
-  --text-soft: #b0c8b2;
+  /* Rose gold palette */
+  --rg:         #c9736a;   /* true rose gold */
+  --rg-bright:  #e8998e;   /* light blush rose */
+  --rg-deep:    #8a3d38;   /* deep burgundy-rose */
+  --rg-warm:    #d4907a;   /* warm copper-rose */
+  --gold:       #c9a96e;   /* classic gold accent */
+  --gold-lt:    #e8d5a3;   /* champagne gold */
+  --champagne:  #f7ede4;   /* warm champagne white */
+  --cream:      #fdf6f0;   /* off-white cream */
+  --blush:      #f2ddd8;   /* soft blush pink */
+  --deep:       #2c1010;   /* deep dark rose-brown */
+  --surface:    #3a1818;   /* rich dark surface */
+  --surface2:   #4a2020;   /* slightly lighter surface */
+  --card-bg:    #fdf6f0;   /* champagne card background */
+  --text-on-dark:  #f0ddd8; /* light text on dark */
+  --text-muted-dk: #c8a09a; /* muted text on dark */
+  --text-on-light: #3a1a18; /* dark text on light cards */
+  --text-muted-lt: #7a4a44; /* muted text on light */
 }
 
 html {
   scroll-behavior: smooth;
-  background: var(--forest);
+  background: var(--deep);
   height: -webkit-fill-available;
 }
 body {
-  background: var(--forest);
-  font-family: 'EB Garamond', serif;
-  color: var(--ivory);
+  background: var(--deep);
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--text-on-dark);
   overflow-x: hidden;
   min-height: 100vh;
   min-height: -webkit-fill-available;
 }
 
-/* ═══════════════════════════════════════════
-   COVER — Art Deco Forest
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   COVER
+══════════════════════════════════════════ */
 #cover {
-  position: fixed; inset: 0;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
   width: 100%; width: 100dvw;
   height: 100vh; height: 100dvh;
   background:
-    radial-gradient(ellipse at 50% 35%, var(--forest-l) 0%, var(--forest) 65%);
+    radial-gradient(ellipse at 30% 20%, rgba(201,115,106,0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 80%, rgba(138,61,56,0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, #3a1818 0%, #2c1010 100%);
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   z-index: 9999;
-  transition: opacity 1.6s cubic-bezier(.4,0,.2,1), visibility 1.6s;
+  transition: opacity 1.4s cubic-bezier(.4,0,.2,1), visibility 1.4s;
   overflow: hidden;
-  padding: max(32px, env(safe-area-inset-top)) 32px max(32px, env(safe-area-inset-bottom));
+  padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
 }
-#cover.hidden { opacity:0; visibility:hidden; pointer-events:none; }
+#cover.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-/* Decorative art-deco border frame */
-.cover-frame {
-  position: absolute;
-  inset: 20px;
-  pointer-events: none;
+/* Animated rings */
+.cover-ring {
+  position: absolute; border-radius: 50%;
+  border: 1px solid rgba(201,115,106,0.15);
+  animation: ringPulse 6s ease-in-out infinite;
 }
-.cover-frame-svg {
-  width: 100%; height: 100%;
+.cover-ring:nth-child(1) { width: min(280px,78vw); height: min(280px,78vw); }
+.cover-ring:nth-child(2) { width: min(460px,118vw); height: min(460px,118vw); animation-delay:.9s; border-color:rgba(201,115,106,0.09); }
+.cover-ring:nth-child(3) { width: min(660px,158vw); height: min(660px,158vw); animation-delay:1.8s; border-color:rgba(201,115,106,0.055); }
+.cover-ring:nth-child(4) { width: min(880px,205vw); height: min(880px,205vw); animation-delay:2.7s; border-color:rgba(201,115,106,0.025); }
+@keyframes ringPulse {
+  0%,100% { transform:scale(1); opacity:.55; }
+  50% { transform:scale(1.05); opacity:1; }
 }
 
-/* Central botanical illustration */
-.cover-botanical {
-  width: clamp(160px, 38vw, 240px);
-  margin-bottom: 20px;
+/* Dual-colour glow — rose + gold */
+.cover-glow-rose {
+  position: absolute; width: min(320px,80vw); height: min(320px,80vw); border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,115,106,0.22) 0%, transparent 68%);
+  animation: glowBreath 4.5s ease-in-out infinite;
+}
+.cover-glow-gold {
+  position: absolute; width: min(220px,55vw); height: min(220px,55vw); border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,169,110,0.14) 0%, transparent 65%);
+  animation: glowBreath 4.5s ease-in-out 1.5s infinite;
+  transform: translate(30px, -40px);
+}
+@keyframes glowBreath {
+  0%,100% { transform:scale(1); opacity:.5; }
+  50% { transform:scale(1.4); opacity:1; }
+}
+
+/* Logo — coloured rose gold */
+.cover-logo {
+  width: clamp(110px, 28vw, 170px);
+  margin-bottom: 26px;
   opacity: 0;
-  animation: fadeScale 1.4s ease 0.5s forwards;
+  animation: fadeUp 1.2s ease .4s forwards;
+  filter: drop-shadow(0 0 22px rgba(201,115,106,0.5));
 }
-
-.cover-rule-top {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 16px;
-  opacity: 0; animation: fadeIn 1s ease 1s forwards;
-  width: clamp(200px, 55vw, 320px);
-}
-.cover-rule-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold-dim)); }
-.cover-rule-line.rev { background: linear-gradient(to left, transparent, var(--gold-dim)); }
-.cover-rule-diamond { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0; }
 
 .cover-eyebrow {
-  font-family: 'EB Garamond', serif; font-size: clamp(.7rem,.9vw + .5rem,1rem);
-  letter-spacing: .45em; color: var(--gold-dim); text-transform: uppercase;
-  font-style: italic; margin-bottom: 10px;
-  opacity: 0; animation: fadeUp 1s ease 1.1s forwards; text-align: center;
+  font-family:'Cinzel',serif; font-size:clamp(.48rem,.65vw + .28rem,.62rem);
+  letter-spacing:.55em; color:var(--rg-bright); text-transform:uppercase;
+  margin-bottom:12px; opacity:0; animation:fadeUp 1s ease .9s forwards; text-align:center;
 }
 .cover-names {
-  font-family: 'Pinyon Script', cursive;
-  font-size: clamp(3rem, 10vw, 7rem);
+  font-family:'Great Vibes',cursive; font-size:clamp(2.8rem,9vw,6.8rem);
+  line-height:1.25; padding:0.15em 0.1em; text-align:center;
   color: var(--gold-lt);
-  line-height: 1.1;
-  padding: 0.08em 0.1em;
-  text-align: center;
-  text-shadow: 0 2px 30px rgba(200,168,75,0.3);
-  opacity: 0; animation: fadeUp 1.5s ease 1.2s forwards;
+  text-shadow: 0 2px 20px rgba(201,115,106,0.4);
+  opacity:0; animation:fadeUp 1.4s ease 1.1s forwards;
 }
 .cover-tagline {
-  font-family: 'EB Garamond', serif; font-style: italic;
-  font-size: clamp(.85rem, 1.2vw + .55rem, 1.1rem);
-  color: var(--text-soft); letter-spacing: .08em;
-  margin-top: 10px; text-align: center;
-  opacity: 0; animation: fadeUp 1s ease 1.55s forwards;
+  font-family:'Cinzel',serif; font-size:clamp(.5rem,.58vw + .28rem,.65rem);
+  letter-spacing:.35em; color:var(--rg-bright); text-transform:uppercase;
+  margin-top:12px; text-align:center;
+  opacity:0; animation:fadeUp 1s ease 1.4s forwards;
 }
-.cover-rule-bot {
-  display: flex; align-items: center; gap: 12px;
-  margin-top: 16px; margin-bottom: 18px;
-  opacity: 0; animation: fadeIn 1s ease 1.6s forwards;
-  width: clamp(200px, 55vw, 320px);
+.cover-date {
+  font-family:'Cinzel',serif; font-size:clamp(.48rem,.55vw + .26rem,.6rem);
+  letter-spacing:.45em; color:rgba(232,153,142,.55); text-transform:uppercase;
+  margin-top:6px; opacity:0; animation:fadeUp 1s ease 1.6s forwards; text-align:center;
 }
-.cover-date-block {
-  text-align: center;
-  opacity: 0; animation: fadeUp 1s ease 1.75s forwards;
+.cover-line {
+  width:1px; height:44px; margin:20px auto;
+  background:linear-gradient(to bottom,rgba(201,115,106,.6),transparent);
+  opacity:0; animation:fadeIn 1s ease 1.85s forwards;
 }
-.cover-date-num {
-  font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem);
-  color: var(--gold); letter-spacing: .1em; line-height: 1;
-}
-.cover-date-label {
-  font-family: 'EB Garamond', serif; font-size: clamp(.7rem, .9vw + .4rem, .9rem);
-  letter-spacing: .4em; color: var(--gold-dim); text-transform: uppercase;
-  margin-top: 4px;
-}
-
 .cover-btn {
-  margin-top: 28px; padding: clamp(13px,2vw,16px) clamp(36px,6vw,60px);
-  background: transparent; border: 1px solid var(--gold-dim);
-  color: var(--gold-lt); font-family: 'EB Garamond', serif;
-  font-size: clamp(.85rem, 1.1vw + .55rem, 1rem);
-  letter-spacing: .3em; text-transform: uppercase; font-style: italic;
-  cursor: pointer; position: relative; overflow: hidden; transition: color .5s;
-  opacity: 0; animation: fadeUp 1s ease 2s forwards; white-space: nowrap;
+  padding:clamp(12px,2vw,15px) clamp(30px,5vw,52px); background:transparent;
+  border:1px solid rgba(201,115,106,.55);
+  color:var(--rg-bright); font-family:'Cinzel',serif;
+  font-size:clamp(.54rem,.48vw + .33rem,.62rem); letter-spacing:.42em; text-transform:uppercase;
+  cursor:pointer; position:relative; overflow:hidden; transition:color .5s;
+  opacity:0; animation:fadeUp 1s ease 2.1s forwards; white-space:nowrap;
 }
 .cover-btn::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
-  transform: translateX(-100%); transition: transform .55s cubic-bezier(.4,0,.2,1); z-index: -1;
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,var(--rg-deep),var(--rg));
+  transform:translateY(100%); transition:transform .55s cubic-bezier(.4,0,.2,1); z-index:-1;
 }
-.cover-btn:hover { color: var(--forest); }
-.cover-btn:hover::before { transform: translateX(0); }
+.cover-btn:hover { color:#fff; }
+.cover-btn:hover::before { transform:translateY(0); }
 
-/* ═══════════════════════════════════════════
-   MAIN
-═══════════════════════════════════════════ */
-#main { opacity: 0; transition: opacity 1.6s ease .3s; }
-#main.visible { opacity: 1; }
-#petals-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; }
+/* ══ MAIN ══ */
+#main { opacity:0; transition:opacity 1.4s ease .2s; }
+#main.visible { opacity:1; }
+#petals-canvas { position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:10; }
 
-/* ═══════════════════════════════════════════
-   HERO — Lush Green with Gold Typography
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
 .hero {
   min-height: 100vh; min-height: 100dvh;
-  position: relative; overflow: clip; overflow-clip-margin: 0.2em;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; padding: clamp(80px,10vw,120px) clamp(20px,5vw,60px) clamp(100px,12vw,140px);
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:120px 24px 130px;
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(45,74,47,0.8) 0%, transparent 60%),
-    radial-gradient(ellipse at 0% 100%, rgba(30,50,32,0.6) 0%, transparent 50%),
-    var(--forest);
+    radial-gradient(ellipse at 20% 10%, rgba(201,115,106,0.18) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 90%, rgba(138,61,56,0.22) 0%, transparent 45%),
+    linear-gradient(180deg, #3d1a18 0%, #2c1010 60%, #250e0e 100%);
 }
 
-/* Subtle vine texture */
-.hero::after {
-  content: '';
-  position: absolute; inset: 0;
-  background-image:
-    radial-gradient(ellipse at 2px 2px, rgba(74,122,76,0.04) 1px, transparent 0);
-  background-size: 28px 28px;
-  pointer-events: none;
+/* Subtle lace texture pattern overlay */
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background-image: radial-gradient(circle at 1px 1px, rgba(201,115,106,0.06) 1px, transparent 0);
+  background-size: 32px 32px;
+  pointer-events:none;
 }
 
-/* Botanical watermark */
-.hero-watermark {
-  position: absolute; inset: 0; display: flex;
-  align-items: center; justify-content: center;
-  pointer-events: none; user-select: none;
-  opacity: 0.025;
+.hero-bg-text {
+  position:absolute; font-family:'Great Vibes',cursive;
+  font-size:clamp(11rem,30vw,25rem); color:rgba(201,115,106,.04);
+  top:50%; left:50%; transform:translate(-50%,-50%);
+  pointer-events:none; user-select:none; white-space:nowrap;
+  overflow:hidden; max-width:100vw;
 }
-.hero-watermark svg { width: min(500px, 90vw); height: auto; }
 
-/* Ornate top crest */
-.hero-crest { margin-bottom: 32px; opacity: 0; animation: fadeDown 1.2s ease .3s forwards; }
+/* Premium corner decorations */
+.hero-corner {
+  position:absolute; width:80px; height:80px;
+  opacity:0; animation:fadeIn 1.5s ease 1s forwards;
+}
+.hero-corner.tl { top:24px; left:24px; }
+.hero-corner.tr { top:24px; right:24px; transform:scaleX(-1); }
+.hero-corner.bl { bottom:70px; left:24px; transform:scaleY(-1); }
+.hero-corner.br { bottom:70px; right:24px; transform:scale(-1); }
 
+.hero-orn { margin-bottom:36px; opacity:0; animation:fadeDown 1s ease .3s forwards; }
 .hero-eyebrow {
-  font-family: 'EB Garamond', serif; font-size: clamp(.7rem,.8vw + .45rem,.9rem);
-  letter-spacing: .55em; color: var(--sage); text-transform: uppercase;
-  margin-bottom: 20px; opacity: 0; animation: fadeDown 1s ease .5s forwards;
+  font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.58em;
+  color:var(--rg-bright); text-transform:uppercase; margin-bottom:24px;
+  opacity:0; animation:fadeDown 1s ease .5s forwards;
 }
 .hero-names {
-  font-family: 'Pinyon Script', cursive;
-  font-size: clamp(4.5rem, 14vw, 11rem);
-  color: var(--gold-lt); line-height: 1.05;
-  padding: 0.08em 0.12em;
-  text-shadow: 0 2px 40px rgba(200,168,75,0.25), 0 0 80px rgba(200,168,75,0.1);
-  opacity: 0; animation: fadeUp 1.8s ease .7s forwards;
+  font-family:'Great Vibes',cursive; font-size:clamp(4.8rem,15vw,11rem);
+  line-height:1.2; padding:0.15em 0.1em;
+  color: var(--gold-lt);
+  text-shadow: 0 0 60px rgba(201,115,106,0.35), 0 2px 0 rgba(0,0,0,0.2);
+  opacity:0; animation:fadeUp 1.6s ease .7s forwards;
 }
 .hero-amp {
-  display: block; font-size: .6em; color: var(--gold);
-  line-height: 1.1; padding: 0.05em 0;
+  display:block; font-size:.63em; line-height:1.2; padding:0.08em 0;
+  color: var(--rg-bright);
 }
-.hero-divider {
-  display: flex; align-items: center; gap: 20px;
-  margin: 28px auto; width: clamp(200px, 60vw, 420px);
-  opacity: 0; animation: fadeIn 1s ease 1.3s forwards;
+.hero-rule {
+  display:flex; align-items:center; gap:18px; margin:32px auto;
+  opacity:0; animation:fadeIn 1s ease 1.2s forwards;
 }
-.hero-div-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold-dim)); }
-.hero-div-line.rev { background: linear-gradient(to left, transparent, var(--gold-dim)); }
-.hero-div-leaf { font-size: 1.1rem; color: var(--gold); }
-
+.hero-rule-line { flex:1; max-width:90px; height:1px; background:linear-gradient(to right,transparent,rgba(201,115,106,.45)); }
+.hero-rule-line:last-child { background:linear-gradient(to left,transparent,rgba(201,115,106,.45)); }
+.hero-rule-diamond { width:7px; height:7px; background:var(--rg); transform:rotate(45deg); box-shadow:0 0 12px rgba(201,115,106,.6); }
 .hero-tagline {
-  font-family: 'EB Garamond', serif; font-style: italic;
-  font-size: clamp(1rem, 2.2vw, 1.3rem);
-  color: var(--text-soft); letter-spacing: .06em; line-height: 1.7;
-  opacity: 0; animation: fadeUp 1s ease 1.5s forwards;
+  font-size:clamp(1rem,2.6vw,1.2rem); color:var(--text-muted-dk); font-style:italic; letter-spacing:.07em;
+  opacity:0; animation:fadeUp 1s ease 1.4s forwards;
 }
-.hero-date-badge {
-  margin-top: 32px; padding: 12px 32px;
-  border: 1px solid rgba(200,168,75,.25);
-  font-family: 'EB Garamond', serif; font-size: clamp(.8rem, 1vw + .5rem, 1rem);
-  letter-spacing: .3em; color: var(--gold); text-transform: uppercase;
-  background: rgba(200,168,75,.05); backdrop-filter: blur(6px);
-  opacity: 0; animation: fadeUp 1s ease 1.7s forwards;
+.hero-badge {
+  margin-top:36px; padding:10px 28px;
+  border:1px solid rgba(201,115,106,.3);
+  font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.45em; color:var(--rg-bright); text-transform:uppercase;
+  background:rgba(201,115,106,.07); backdrop-filter:blur(6px);
+  opacity:0; animation:fadeUp 1s ease 1.65s forwards;
+  position:relative;
 }
+.hero-badge::before, .hero-badge::after {
+  content:''; position:absolute;
+  width:6px; height:6px; background:var(--rg);
+  transform:rotate(45deg);
+}
+.hero-badge::before { top:-3px; left:50%; margin-left:-3px; }
+.hero-badge::after  { bottom:-3px; left:50%; margin-left:-3px; }
 
 .hero-scroll {
-  position: absolute; bottom: clamp(30px, 5vw, 48px); left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-  opacity: 0; animation: fadeIn 1s ease 2.5s forwards;
+  position:absolute; bottom:44px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+  opacity:0; animation:fadeIn 1s ease 2.5s forwards;
 }
 .hero-scroll span {
-  font-family: 'EB Garamond', serif; font-size: .75rem;
-  letter-spacing: .45em; color: rgba(74,122,76,.6); text-transform: uppercase; font-style: italic;
+  font-family:'Cinzel',serif; font-size:.5rem; letter-spacing:.5em;
+  color:rgba(201,115,106,.45); text-transform:uppercase;
 }
 .hero-scroll-line {
-  width: 1px; height: 52px;
-  background: linear-gradient(to bottom, rgba(200,168,75,.5), transparent);
-  animation: scrollFlow 2.5s ease-in-out infinite;
+  width:1px; height:56px;
+  background:linear-gradient(to bottom,rgba(201,115,106,.55),transparent);
+  animation:scrollFlow 2.5s ease-in-out infinite;
 }
 @keyframes scrollFlow {
-  0% { transform: scaleY(0); transform-origin: top; }
-  50% { transform: scaleY(1); transform-origin: top; }
-  51% { transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; opacity: .3; }
+  0% { transform:scaleY(0); transform-origin:top; }
+  50% { transform:scaleY(1); transform-origin:top; }
+  51% { transform-origin:bottom; }
+  100% { transform:scaleY(0); transform-origin:bottom; opacity:.3; }
 }
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════
    SECTION COMMON
-═══════════════════════════════════════════ */
-.section-wrap { padding: clamp(70px,9vw,120px) clamp(20px,5vw,60px); max-width: 900px; margin: 0 auto; text-align: center; }
-.s-eyebrow {
-  font-family: 'EB Garamond', serif; font-size: clamp(.7rem,.8vw + .45rem,.9rem);
-  letter-spacing: .5em; color: var(--sage); text-transform: uppercase; font-style: italic;
-  margin-bottom: 12px; opacity: 0; transform: translateY(16px); transition: all .9s ease;
+══════════════════════════════════════════ */
+.section-wrap { padding:108px 24px; max-width:900px; margin:0 auto; text-align:center; }
+.section-eyebrow {
+  font-family:'Cinzel',serif; font-size:.57rem; letter-spacing:.56em; color:var(--rg-bright);
+  text-transform:uppercase; margin-bottom:13px;
+  opacity:0; transform:translateY(14px); transition:all .9s ease;
 }
-.s-eyebrow.in { opacity: 1; transform: translateY(0); }
-.s-title {
-  font-family: 'Pinyon Script', cursive;
-  font-size: clamp(2.8rem, 7.5vw, 5.5rem);
-  color: var(--gold-lt); line-height: 1.1; padding: 0.05em 0.08em;
-  text-shadow: 0 2px 20px rgba(200,168,75,.18);
-  opacity: 0; transform: translateY(24px); transition: all 1.1s ease .15s;
+.section-eyebrow.in { opacity:1; transform:translateY(0); }
+.section-title {
+  font-family:'Great Vibes',cursive; font-size:clamp(2.8rem,8.5vw,5.2rem);
+  line-height:1.2; padding:0.1em 0.05em;
+  color: var(--gold-lt);
+  text-shadow: 0 2px 16px rgba(201,115,106,0.25);
+  opacity:0; transform:translateY(22px); transition:all 1.1s ease .15s;
 }
-.s-title.in { opacity: 1; transform: translateY(0); }
-.s-orn {
-  display: flex; align-items: center; justify-content: center; gap: 16px;
-  margin: 22px auto; opacity: 0; transition: opacity .9s ease .3s;
+.section-title.in { opacity:1; transform:translateY(0); }
+.section-orn {
+  display:flex; align-items:center; justify-content:center; gap:14px; margin:26px auto;
+  opacity:0; transition:opacity .9s ease .3s;
 }
-.s-orn.in { opacity: 1; }
-.s-orn-line { width: 60px; height: 1px; background: linear-gradient(to right, transparent, rgba(200,168,75,.4)); }
-.s-orn-line.rev { background: linear-gradient(to left, transparent, rgba(200,168,75,.4)); }
-.s-orn-leaf { color: var(--gold-dim); font-size: 1rem; }
-.s-body {
-  font-family: 'EB Garamond', serif; font-style: italic;
-  font-size: clamp(1.05rem, 2.2vw, 1.25rem); line-height: 2.1;
-  color: var(--text-soft); max-width: 580px; margin: 0 auto;
-  opacity: 0; transform: translateY(18px); transition: all .9s ease .4s;
+.section-orn.in { opacity:1; }
+.orn-line { width:65px; height:1px; background:linear-gradient(to right,transparent,rgba(201,115,106,.4)); }
+.orn-line:last-child { background:linear-gradient(to left,transparent,rgba(201,115,106,.4)); }
+.orn-c { display:flex; gap:5px; align-items:center; }
+.orn-dot { width:3.5px; height:3.5px; background:rgba(201,115,106,.45); border-radius:50%; }
+.orn-diamond { width:7px; height:7px; background:var(--rg); transform:rotate(45deg); box-shadow:0 0 8px rgba(201,115,106,.4); }
+.section-body {
+  font-size:clamp(1.05rem,2.4vw,1.2rem); line-height:2.1; color:var(--text-muted-dk); font-style:italic;
+  max-width:560px; margin:0 auto;
+  opacity:0; transform:translateY(18px); transition:all .9s ease .4s;
 }
-.s-body.in { opacity: 1; transform: translateY(0); }
-
-/* ═══════════════════════════════════════════
-   BANDS
-═══════════════════════════════════════════ */
-.band-alt {
-  background:
-    radial-gradient(ellipse at 100% 50%, rgba(30,50,32,.8) 0%, transparent 60%),
-    var(--forest-m);
-  border-top: 1px solid rgba(200,168,75,.1);
-  border-bottom: 1px solid rgba(200,168,75,.1);
-}
-.band-dark { background: var(--forest); }
+.section-body.in { opacity:1; transform:translateY(0); }
 .section-sep {
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(200,168,75,.15), transparent);
+  width:100%; height:1px;
+  background:linear-gradient(to right,transparent,rgba(201,115,106,.18),transparent);
 }
 
-/* ═══════════════════════════════════════════
-   PHOTO
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   INVITATION MESSAGE BAND
+══════════════════════════════════════════ */
+.invite-band {
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(201,115,106,.06) 0%, transparent 70%),
+    var(--surface);
+  border-top:1px solid rgba(201,115,106,.12);
+  border-bottom:1px solid rgba(201,115,106,.12);
+}
+
+/* ══════════════════════════════════════════
+   PHOTO BAND
+══════════════════════════════════════════ */
 .photo-band {
   background:
-    radial-gradient(ellipse at 30% 50%, rgba(45,74,47,.5) 0%, transparent 55%),
-    var(--forest-l);
-  padding: clamp(60px,8vw,100px) 0;
-  border-top: 1px solid rgba(200,168,75,.1);
-  border-bottom: 1px solid rgba(200,168,75,.1);
+    radial-gradient(ellipse at 0% 50%, rgba(201,115,106,.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 50%, rgba(138,61,56,.1) 0%, transparent 50%),
+    var(--surface2);
+  padding:88px 0; position:relative;
 }
+.photo-band::before,.photo-band::after {
+  content:''; position:absolute; left:0; right:0; height:1px;
+  background:linear-gradient(to right,transparent,rgba(201,115,106,.2),transparent);
+}
+.photo-band::before { top:0; } .photo-band::after { bottom:0; }
 .photo-grid {
-  display: grid; grid-template-columns: 1fr 1.15fr 1fr;
-  gap: 8px; max-width: 820px; margin: 44px auto 0; padding: 0 24px;
+  display:grid; grid-template-columns:1fr 1.15fr 1fr;
+  gap:6px; max-width:840px; margin:50px auto 0; padding:0 24px;
 }
-@media(max-width:560px) { .photo-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:560px) { .photo-grid { grid-template-columns:1fr 1fr; } }
 .photo-card {
-  aspect-ratio: 2/3; overflow: hidden; position: relative;
-  opacity: 0; transform: translateY(28px) scale(.97); transition: all .9s cubic-bezier(.4,0,.2,1);
-  border: 1px solid rgba(200,168,75,.15);
+  aspect-ratio:2/3; overflow:hidden; position:relative;
+  opacity:0; transform:translateY(28px) scale(.97); transition:all .9s cubic-bezier(.4,0,.2,1);
 }
-.photo-card.in { opacity: 1; transform: translateY(0) scale(1); }
-.photo-card:nth-child(2) { transition-delay: .15s; }
-.photo-card:nth-child(3) { transition-delay: .3s; }
-.photo-card:hover { border-color: rgba(200,168,75,.4); }
+.photo-card.in { opacity:1; transform:translateY(0) scale(1); }
+.photo-card:nth-child(2) { transition-delay:.15s; }
+.photo-card:nth-child(3) { transition-delay:.3s; }
+.photo-card::before {
+  content:''; position:absolute; inset:0; z-index:1;
+  border:1px solid rgba(201,115,106,.2); transition:border-color .4s;
+}
+.photo-card:hover::before { border-color:rgba(201,115,106,.5); }
 .photo-placeholder {
-  width: 100%; height: 100%;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
-  background: linear-gradient(155deg, var(--moss) 0%, var(--forest-l) 100%);
+  width:100%; height:100%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;
+  background:linear-gradient(155deg, #4a2020 0%, #3a1818 100%);
 }
-.pp-sym { font-family: 'Pinyon Script', cursive; font-size: 3.5rem; color: rgba(200,168,75,.2); padding: 0.1em; }
-.pp-lbl { font-family: 'EB Garamond', serif; font-size: .58rem; letter-spacing: .4em; color: rgba(200,168,75,.3); text-transform: uppercase; font-style: italic; }
+.pp-sym { font-family:'Great Vibes',cursive; font-size:3.5rem; color:rgba(201,115,106,.22); display:block; padding:0.1em; }
+.pp-lbl { font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.42em; color:rgba(201,115,106,.3); text-transform:uppercase; }
 
-/* ═══════════════════════════════════════════
-   COUNTDOWN — Botanical Cards
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   COUNTDOWN
+══════════════════════════════════════════ */
 .countdown-band {
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(45,74,47,.4) 0%, transparent 55%),
-    var(--forest-m);
-  padding: clamp(60px,8vw,100px) 24px;
-  border-top: 1px solid rgba(200,168,75,.1);
+    radial-gradient(ellipse at 50% 0%, rgba(201,115,106,.12) 0%, transparent 55%),
+    linear-gradient(180deg, var(--surface) 0%, var(--deep) 100%);
+  padding:100px 24px; position:relative;
 }
-.countdown-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; max-width: 660px; margin: 44px auto 0; }
-@media(max-width:500px) { .countdown-grid { grid-template-columns: repeat(2,1fr); } }
+.countdown-band::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(to right,transparent,rgba(201,115,106,.25),transparent);
+}
+.countdown-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; max-width:700px; margin:52px auto 0; }
+@media(max-width:500px) { .countdown-grid { grid-template-columns:repeat(2,1fr); } }
+
 .cd-card {
-  background: rgba(45,74,47,.35); border: 1px solid rgba(200,168,75,.18);
-  padding: 28px 10px 22px; text-align: center; position: relative; overflow: hidden;
-  opacity: 0; transform: translateY(22px); transition: all .8s ease;
+  background:linear-gradient(145deg, rgba(201,115,106,.1), rgba(138,61,56,.12));
+  border:1px solid rgba(201,115,106,.22);
+  padding:32px 12px 24px; text-align:center; overflow:hidden; position:relative;
+  opacity:0; transform:translateY(22px); transition:all .8s ease;
+  box-shadow: inset 0 1px 0 rgba(232,153,142,.15), 0 4px 20px rgba(0,0,0,.2);
 }
 .cd-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(to right,transparent,rgba(232,153,142,.6),transparent);
 }
-.cd-card.in { opacity: 1; transform: translateY(0); }
-.cd-card:nth-child(2){transition-delay:.1s;} .cd-card:nth-child(3){transition-delay:.2s;} .cd-card:nth-child(4){transition-delay:.3s;}
+/* Shimmer diagonal */
+.cd-card::after {
+  content:''; position:absolute;
+  top:-50%; left:-50%; width:200%; height:200%;
+  background:linear-gradient(105deg, transparent 40%, rgba(232,153,142,.04) 50%, transparent 60%);
+  animation:cdShimmer 4s ease-in-out infinite;
+}
+@keyframes cdShimmer {
+  0%,100% { transform:translateX(-30%); }
+  50% { transform:translateX(30%); }
+}
+.cd-card.in { opacity:1; transform:translateY(0); }
+.cd-card:nth-child(2){transition-delay:.1s;}
+.cd-card:nth-child(3){transition-delay:.2s;}
+.cd-card:nth-child(4){transition-delay:.3s;}
+
 .cd-num {
-  font-family: 'Playfair Display', serif; font-size: clamp(2.2rem,7.5vw,3.8rem);
-  color: var(--gold-lt); line-height: 1; font-weight: 500;
-  transition: color .25s;
+  font-family:'Cinzel',serif; font-size:clamp(2.5rem,8vw,4rem); font-weight:600;
+  color: var(--gold-lt);
+  line-height:1; position:relative; z-index:1;
+  transition:color .25s;
 }
 .cd-num.flash { color: #fff; }
-.cd-sep { width: 24px; height: 1px; background: rgba(200,168,75,.25); margin: 8px auto; }
-.cd-label { font-family: 'EB Garamond', serif; font-size: clamp(.7rem,.8vw + .4rem,.85rem); letter-spacing: .35em; color: var(--sage); text-transform: uppercase; font-style: italic; }
-.cd-note { font-family: 'EB Garamond', serif; font-style: italic; font-size: clamp(.85rem,1.2vw + .5rem,1rem); color: rgba(200,168,75,.45); text-align: center; margin-top: 24px; }
+.cd-sep { width:28px; height:1px; background:rgba(201,115,106,.3); margin:10px auto; position:relative; z-index:1; }
+.cd-label { font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.4em; color:var(--rg-bright); opacity:.6; text-transform:uppercase; position:relative; z-index:1; }
+.cd-note {
+  font-family:'Cormorant Garamond',serif; font-size:.95rem; font-style:italic;
+  color:rgba(201,115,106,.5); text-align:center; margin-top:28px; letter-spacing:.05em;
+}
 
-/* ═══════════════════════════════════════════
-   EVENTS — Parchment Cards with Botanical Borders
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   EVENTS — CHAMPAGNE CARDS
+══════════════════════════════════════════ */
 .events-band {
   background:
-    radial-gradient(ellipse at 0% 50%, rgba(45,74,47,.4) 0%, transparent 50%),
-    radial-gradient(ellipse at 100% 50%, rgba(30,50,32,.5) 0%, transparent 50%),
-    var(--forest-l);
-  padding: clamp(60px,8vw,100px) clamp(16px,4vw,40px);
-  border-top: 1px solid rgba(200,168,75,.1);
-  border-bottom: 1px solid rgba(200,168,75,.1);
+    radial-gradient(ellipse at 100% 0%, rgba(201,115,106,.08) 0%, transparent 50%),
+    var(--surface);
+  padding:100px 24px; position:relative;
 }
-.events-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; max-width: 900px; margin: 50px auto 0; }
-@media(max-width:640px) { .events-grid { grid-template-columns: 1fr; } }
+.events-band::before,.events-band::after {
+  content:''; position:absolute; left:0; right:0; height:1px;
+  background:linear-gradient(to right,transparent,rgba(201,115,106,.2),transparent);
+}
+.events-band::before{top:0;} .events-band::after{bottom:0;}
+.events-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; max-width:900px; margin:56px auto 0; }
+@media(max-width:640px) { .events-grid { grid-template-columns:1fr; } }
 
 .ev-card {
-  background: var(--ivory);
-  padding: 38px 34px; position: relative; overflow: hidden;
-  opacity: 0; transform: translateY(26px);
-  transition: opacity .9s ease, transform .9s ease, box-shadow .4s;
-  box-shadow: 0 4px 24px rgba(0,0,0,.3);
+  background:var(--card-bg);
+  border:1px solid rgba(201,115,106,.2);
+  padding:40px 36px; position:relative; overflow:hidden;
+  opacity:0; transform:translateY(26px);
+  transition:opacity .9s ease, transform .9s ease, border-color .4s, box-shadow .4s;
+  box-shadow: 0 2px 20px rgba(0,0,0,.15);
 }
-.ev-card.in { opacity: 1; transform: translateY(0); }
-.ev-card:nth-child(2){transition-delay:.12s;} .ev-card:nth-child(3){transition-delay:.24s;} .ev-card:nth-child(4){transition-delay:.36s;}
-.ev-card:hover { box-shadow: 0 12px 48px rgba(0,0,0,.4), 0 0 0 1px rgba(200,168,75,.3); transform: translateY(-3px); }
+.ev-card.in { opacity:1; transform:translateY(0); }
+.ev-card:nth-child(2){transition-delay:.12s;}
+.ev-card:nth-child(3){transition-delay:.24s;}
+.ev-card:nth-child(4){transition-delay:.36s;}
+.ev-card:hover {
+  border-color:rgba(201,115,106,.4);
+  box-shadow:0 12px 48px rgba(201,115,106,.18), 0 2px 8px rgba(0,0,0,.1);
+  transform:translateY(-2px);
+}
 
-/* Botanical corner SVG on each card */
-.ev-corner { position: absolute; width: 44px; opacity: .18; }
-.ev-corner.tl { top: 6px; left: 6px; }
-.ev-corner.br { bottom: 6px; right: 6px; transform: rotate(180deg); }
-
-/* Left accent bar — coloured per event */
+/* Shimmer on hover */
 .ev-card::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-  width: 4px; background: var(--ev-col, var(--gold));
+  content:''; position:absolute; top:0; left:-110%; width:60%; height:100%;
+  background:linear-gradient(to right,transparent,rgba(201,115,106,.06),transparent);
+  transition:left .7s ease; z-index:0;
 }
-.ev-card.mehndi  { --ev-col: #7b60b8; }
-.ev-card.haldi   { --ev-col: #c89020; }
-.ev-card.wedding { --ev-col: #4a7a4c; }
-.ev-card.recep   { --ev-col: #8a3838; }
+.ev-card:hover::before { left:160%; }
 
-.ev-content { position: relative; z-index: 1; }
-.ev-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: 'EB Garamond', serif; font-size: clamp(.72rem,.85vw + .42rem,.88rem);
-  letter-spacing: .35em; text-transform: uppercase; font-style: italic;
-  color: var(--ev-col, var(--gold-dim)); margin-bottom: 14px;
+/* Top accent stripe — gradient */
+.ev-card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--ev-gradient, linear-gradient(to right, var(--rg-deep), var(--rg-bright)));
 }
-.ev-badge-dot { width: 5px; height: 5px; background: var(--ev-col); border-radius: 50%; flex-shrink: 0; }
+
+.ev-card.mehndi  { --ev-gradient: linear-gradient(to right,#7b5ea8,#b8a0d8); }
+.ev-card.haldi   { --ev-gradient: linear-gradient(to right,#b87220,#e8b86a); }
+.ev-card.wedding { --ev-gradient: linear-gradient(to right,var(--rg-deep),var(--rg-bright)); }
+.ev-card.recep   { --ev-gradient: linear-gradient(to right,#2a6655,#6ab8a0); }
+
+.ev-content { position:relative; z-index:1; }
+
+/* Monogram watermark on each card */
+.ev-watermark {
+  position:absolute; bottom:16px; right:20px;
+  font-family:'Great Vibes',cursive; font-size:5rem; line-height:1;
+  color:rgba(201,115,106,.06); pointer-events:none; user-select:none;
+  z-index:0;
+}
+
+.ev-badge {
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.44em;
+  text-transform:uppercase; color:var(--text-muted-lt);
+  margin-bottom:14px; opacity:.75;
+}
+.ev-badge-dot { width:4px; height:4px; background:var(--rg); border-radius:50%; }
 
 .ev-title {
-  font-family: 'Pinyon Script', cursive;
-  font-size: clamp(2.2rem, 5vw, 3rem);
-  line-height: 1.15; margin-bottom: 14px; padding: 0.05em 0;
+  font-family:'Great Vibes',cursive; font-size:2.7rem;
+  line-height:1.15; margin-bottom:16px;
 }
-.ev-card.mehndi  .ev-title { color: #5a38a0; }
-.ev-card.haldi   .ev-title { color: #8a6000; }
-.ev-card.wedding .ev-title { color: #2a5a2c; }
-.ev-card.recep   .ev-title { color: #6a2828; }
+.ev-card.mehndi  .ev-title { color:#5c3a9e; }
+.ev-card.haldi   .ev-title { color:#8a5800; }
+.ev-card.wedding .ev-title { color: var(--rg-deep); }
+.ev-card.recep   .ev-title { color:#1e6655; }
 
-.ev-divider { width: 32px; height: 1px; background: var(--ev-col, var(--gold-dim)); opacity: .3; margin-bottom: 14px; }
-.ev-info { font-family: 'EB Garamond', serif; font-size: clamp(.92rem,1.1vw + .55rem,1.05rem); line-height: 1.95; color: var(--text-md); font-style: italic; }
-.ev-info strong { font-style: normal; font-weight: 500; color: var(--text-dk); letter-spacing: .02em; }
+.ev-divider { width:36px; height:1px; background:var(--rg); opacity:.2; margin-bottom:16px; }
+.ev-info { font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.95; color:var(--text-muted-lt); font-style:italic; }
+.ev-info strong { font-style:normal; font-weight:600; color:var(--text-on-light); letter-spacing:.02em; }
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════
    FOOTER
-═══════════════════════════════════════════ */
+══════════════════════════════════════════ */
 footer {
-  background: var(--forest);
-  padding: clamp(60px,8vw,100px) 24px clamp(40px,6vw,70px);
-  text-align: center; position: relative;
-  border-top: 1px solid rgba(200,168,75,.1);
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(201,115,106,.08) 0%, transparent 60%),
+    var(--deep);
+  padding:88px 24px 56px; text-align:center;
+  border-top:1px solid rgba(201,115,106,.12); position:relative;
 }
 footer::before {
-  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-  width: 160px; height: 1px; background: linear-gradient(to right, transparent, rgba(200,168,75,.4), transparent);
+  content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:200px; height:1px;
+  background:linear-gradient(to right,transparent,rgba(201,115,106,.4),transparent);
 }
 .footer-big {
-  font-family: 'Pinyon Script', cursive;
-  font-size: clamp(3.5rem,11vw,7.5rem); color: rgba(200,168,75,.12); line-height: 1; padding: 0.05em;
+  font-family:'Great Vibes',cursive; font-size:clamp(4rem,12vw,8rem);
+  line-height:1.2; padding:0.05em;
+  color: rgba(201,115,106,.35);
 }
-.footer-sub { font-family: 'EB Garamond', serif; font-size: clamp(.75rem,.9vw + .45rem,.95rem); letter-spacing: .4em; color: rgba(200,168,75,.35); text-transform: uppercase; font-style: italic; margin-top: 6px; }
-.footer-hr { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 24px auto; }
-.footer-hr-line { width: 44px; height: 1px; background: rgba(200,168,75,.12); }
-.footer-leaf { color: rgba(74,122,76,.5); font-size: 1.1rem; }
-.footer-credit { font-family: 'EB Garamond', serif; font-size: clamp(.65rem,.75vw + .4rem,.8rem); letter-spacing: .35em; color: rgba(200,168,75,.18); text-transform: uppercase; font-style: italic; margin-top: 14px; }
+.footer-sub {
+  font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.5em;
+  color:rgba(201,115,106,.4); text-transform:uppercase; margin-top:8px;
+}
+.footer-hr { display:flex; align-items:center; justify-content:center; gap:14px; margin:26px auto; }
+.footer-hr-line { width:44px; height:1px; background:rgba(201,115,106,.15); }
+.footer-hr svg { width:11px; fill:rgba(201,115,106,.3); }
+.footer-credit {
+  font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.4em;
+  color:rgba(201,115,106,.2); text-transform:uppercase; margin-top:14px;
+}
 
-/* ═══════════════════════════════════════════
-   MUSIC BTN
-═══════════════════════════════════════════ */
+/* ══ MUSIC BTN ══ */
 #music-btn {
-  position: fixed; bottom: clamp(20px,3vw,30px); right: clamp(20px,3vw,30px);
-  width: clamp(46px,7vw,54px); height: clamp(46px,7vw,54px);
-  background: rgba(14,26,16,.92); border: 1px solid rgba(200,168,75,.35); border-radius: 50%;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  z-index: 1000; transition: all .3s; backdrop-filter: blur(12px);
-  box-shadow: 0 6px 24px rgba(0,0,0,.4);
+  position:fixed; bottom:30px; right:30px;
+  width:52px; height:52px;
+  background:linear-gradient(145deg, rgba(58,24,24,.95), rgba(44,16,16,.98));
+  border:1px solid rgba(201,115,106,.4); border-radius:50%;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  z-index:1000; transition:all .3s; backdrop-filter:blur(12px);
+  box-shadow:0 8px 28px rgba(0,0,0,.4), 0 0 0 1px rgba(201,115,106,.08);
 }
-#music-btn:hover { border-color: var(--gold); box-shadow: 0 6px 24px rgba(0,0,0,.5), 0 0 18px rgba(200,168,75,.15); }
-#music-btn svg { width: 19px; fill: var(--gold-dim); }
-.mr { position: absolute; border-radius: 50%; border: 1px solid rgba(200,168,75,.15); animation: mRing 2.8s ease-out infinite; }
-.mr1 { inset: -7px; }
-.mr2 { inset: -15px; border-color: rgba(200,168,75,.07); animation-delay: 1s; }
+#music-btn:hover {
+  border-color:rgba(201,115,106,.7);
+  box-shadow:0 8px 28px rgba(201,115,106,.25), 0 0 20px rgba(201,115,106,.12);
+}
+#music-btn svg { width:19px; fill:var(--rg-bright); }
+.mr { position:absolute; border-radius:50%; border:1px solid rgba(201,115,106,.18); animation:mRing 2.6s ease-out infinite; }
+.mr1 { inset:-7px; }
+.mr2 { inset:-15px; border-color:rgba(201,115,106,.08); animation-delay:.9s; }
 @keyframes mRing { 0%{transform:scale(1);opacity:.7;} 100%{transform:scale(1.6);opacity:0;} }
 
-/* ═══════════════════════════════════════════
-   KEYFRAMES
-═══════════════════════════════════════════ */
-@keyframes fadeUp   { from{opacity:0;transform:translateY(28px);} to{opacity:1;transform:translateY(0);} }
-@keyframes fadeDown { from{opacity:0;transform:translateY(-20px);} to{opacity:1;transform:translateY(0);} }
-@keyframes fadeIn   { from{opacity:0;} to{opacity:1;} }
-@keyframes fadeScale { from{opacity:0;transform:scale(.92);} to{opacity:1;transform:scale(1);} }
+/* ══ KEYFRAMES ══ */
 
-/* ═══════════════════════════════════════════
+/* ── MOBILE LETTER-SPACING FIX — prevents Cinzel from causing overflow boxes ── */
+@media (max-width: 380px) {
+  .hero-eyebrow, .section-eyebrow, .cover-eyebrow, .cover-date,
+  .cover-tagline, .cd-label, .ev-badge, .hero-badge, .hero-scroll span {
+    letter-spacing: 0.2em !important;
+  }
+  .cover-btn { letter-spacing: 0.22em !important; padding: 11px 22px !important; }
+  .hero-names { font-size: clamp(2.8rem, 13vw, 5rem) !important; }
+  .cover-names { font-size: clamp(2.2rem, 10.5vw, 3.5rem) !important; }
+}
+
+/* Gradient text safely removed — all text uses solid colors for 100% mobile compat */
+
+@keyframes fadeUp   { from{opacity:0;transform:translateY(26px);} to{opacity:1;transform:translateY(0);} }
+@keyframes fadeDown { from{opacity:0;transform:translateY(-18px);} to{opacity:1;transform:translateY(0);} }
+@keyframes fadeIn   { from{opacity:0;} to{opacity:1;} }
+
+/* ══════════════════════════════════════════
    RESPONSIVE
-═══════════════════════════════════════════ */
+══════════════════════════════════════════ */
+.section-wrap  { padding: clamp(60px,8vw,108px) clamp(16px,4vw,48px); }
+.events-band   { padding: clamp(60px,8vw,100px) clamp(16px,4vw,48px); }
+.countdown-band{ padding: clamp(60px,8vw,100px) clamp(16px,4vw,48px); }
+.photo-band    { padding: clamp(48px,6vw,88px) 0; }
+footer         { padding: clamp(48px,7vw,88px) clamp(16px,4vw,48px) clamp(32px,4vw,56px); }
+.hero          { padding: clamp(100px,12vw,130px) clamp(16px,4vw,40px) clamp(110px,13vw,140px); }
+.hero-names    { font-size: clamp(3.8rem,12vw,11rem); line-height:1.2; padding:0.15em 0.1em; }
+.hero-orn svg  { width: clamp(140px,40vw,220px); }
+
 @media (max-width: 1023px) {
-  .events-grid { gap: 16px; }
-  .ev-card { padding: 30px 24px; }
-  .ev-title { font-size: clamp(2rem,4.5vw,2.8rem); }
-  .countdown-grid { max-width: 540px; gap: 12px; }
+  .events-grid { gap:16px; }
+  .ev-card { padding:30px 26px; }
+  .ev-title { font-size:2.2rem; }
+  .countdown-grid { max-width:560px; gap:12px; }
+  .cd-num { font-size:clamp(2.2rem,7vw,3.6rem); }
+  .photo-grid { max-width:700px; gap:5px; }
+  .section-wrap { max-width:760px; }
 }
+
 @media (max-width: 768px) {
-  .events-grid { grid-template-columns: repeat(2,1fr); gap: 14px; }
-  .ev-card { padding: 26px 18px; }
-  .ev-title { font-size: clamp(1.9rem,5vw,2.4rem); }
-  .ev-badge { font-size: clamp(.68rem,.9vw + .4rem,.82rem); letter-spacing: .25em; }
-  .ev-info { font-size: clamp(.9rem,1.1vw + .5rem,1rem); }
-  .countdown-grid { grid-template-columns: repeat(4,1fr); gap: 10px; }
-  .cd-num { font-size: clamp(1.8rem,6vw,3rem); }
-  .cd-card { padding: 22px 8px 18px; }
-  .photo-grid { gap: 5px; }
+  .hero-bg-text { font-size:clamp(7rem,22vw,14rem); }
+  .hero-badge { font-size:.55rem; letter-spacing:.35em; padding:9px 20px; }
+  .hero-tagline { font-size:clamp(.9rem,2.5vw,1.1rem); }
+  .hero-corner { width:55px; height:55px; }
+  .events-grid { grid-template-columns:repeat(2,1fr); gap:14px; }
+  .ev-card { padding:26px 20px; }
+  .ev-title { font-size:2rem; }
+  .ev-badge { font-size:.48rem; }
+  .ev-info { font-size:.92rem; }
+  .countdown-grid { grid-template-columns:repeat(4,1fr); gap:10px; }
+  .cd-num { font-size:clamp(1.8rem,6vw,3rem); }
+  .cd-card { padding:22px 8px 18px; }
+  .cd-label { font-size:.48rem; }
+  .photo-grid { grid-template-columns:1fr 1.1fr 1fr; gap:4px; }
+  .orn-line { width:45px; }
+  .cover-tagline { letter-spacing:.25em; font-size:.58rem; }
 }
+
 @media (max-width: 480px) {
-  .cover-names { font-size: clamp(2.5rem,11vw,4rem); }
-  .cover-botanical { width: clamp(120px,38vw,175px); margin-bottom: 14px; }
-  .cover-btn { padding: 12px 28px; font-size: clamp(.8rem,1.1vw + .52rem,.92rem); letter-spacing: .22em; }
-  .hero-names { font-size: clamp(3.5rem,13vw,6rem); }
-  .hero-crest svg { width: clamp(120px,50vw,180px); }
-  .s-title { font-size: clamp(2.4rem,9vw,3.6rem); }
-  .events-grid { grid-template-columns: 1fr; gap: 14px; }
-  .ev-card { padding: 28px 20px; }
-  .ev-title { font-size: clamp(2rem,8vw,2.6rem); }
-  .ev-card:nth-child(2),.ev-card:nth-child(3),.ev-card:nth-child(4) { transition-delay: 0s; }
-  .countdown-grid { grid-template-columns: repeat(2,1fr); gap: 10px; max-width: 300px; }
-  .cd-num { font-size: clamp(1.9rem,9vw,2.8rem); }
-  .photo-grid { grid-template-columns: 1fr 1fr; gap: 4px; }
-  .photo-card:nth-child(3) { display: none; }
-  .footer-big { font-size: clamp(3rem,10vw,5rem); }
+  .cover-logo { width:clamp(95px,42vw,140px); margin-bottom:18px; }
+  .cover-names { font-size:clamp(2.4rem,11vw,3.8rem); }
+  .cover-eyebrow { letter-spacing:.32em; font-size:.54rem; }
+  .cover-tagline { letter-spacing:.18em; font-size:.52rem; }
+  .cover-date { letter-spacing:.28em; font-size:.5rem; }
+  .cover-btn { padding:12px 26px; font-size:.54rem; letter-spacing:.28em; }
+  .cover-line { height:30px; margin:16px auto; }
+  .hero { padding:85px 16px 100px; }
+  .hero-names { font-size:clamp(3.2rem,13vw,5.5rem); }
+  .hero-bg-text { font-size:clamp(5.5rem,18vw,9rem); }
+  .hero-eyebrow { letter-spacing:.28em; font-size:.53rem; }
+  .hero-rule { margin:20px auto; }
+  .hero-badge { font-size:.5rem; letter-spacing:.26em; padding:8px 14px; margin-top:22px; }
+  .hero-tagline { font-size:.93rem; }
+  .hero-scroll { bottom:26px; }
+  .hero-orn svg { width:clamp(110px,52vw,155px); }
+  .hero-corner { display:none; }
+  .section-title { font-size:clamp(2.2rem,9vw,3.4rem); line-height:1.2; }
+  .section-eyebrow { letter-spacing:.33em; font-size:.53rem; }
+  .section-body { font-size:1rem; line-height:1.85; }
+  .orn-line { width:30px; }
+  .events-grid { grid-template-columns:1fr; gap:14px; }
+  .ev-card { padding:28px 22px; }
+  .ev-title { font-size:2.3rem; }
+  .ev-card:nth-child(2),.ev-card:nth-child(3),.ev-card:nth-child(4) { transition-delay:0s; }
+  .ev-watermark { font-size:4rem; }
+  .countdown-grid { grid-template-columns:repeat(2,1fr); gap:10px; max-width:320px; }
+  .cd-num { font-size:clamp(2rem,9vw,2.8rem); }
+  .cd-card { padding:20px 8px 16px; }
+  .cd-note { font-size:.82rem; padding:0 16px; }
+  .photo-grid { grid-template-columns:1fr 1fr; gap:4px; }
+  .photo-card:nth-child(3) { display:none; }
+  .footer-big { font-size:clamp(2.8rem,10vw,5rem); }
+  #music-btn { bottom:20px; right:20px; width:46px; height:46px; }
 }
+
 @media (max-width: 360px) {
-  .cover-names { font-size: 2.3rem; }
-  .hero-names { font-size: 3.2rem; }
-  .ev-badge { letter-spacing: .18em; }
+  .cover-names { font-size:2.2rem; }
+  .hero-names { font-size:3rem; }
+  .countdown-grid { max-width:280px; }
+  .cd-num { font-size:1.8rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- ══ COVER ══ -->
+<!-- COVER -->
 <div id="cover">
-  <!-- Art Deco frame -->
-  <div class="cover-frame">
-    <svg class="cover-frame-svg" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none">
-      <!-- Corners -->
-      <path d="M0 12 L0 0 L12 0" stroke="rgba(200,168,75,0.25)" stroke-width="0.5"/>
-      <path d="M88 0 L100 0 L100 12" stroke="rgba(200,168,75,0.25)" stroke-width="0.5"/>
-      <path d="M0 88 L0 100 L12 100" stroke="rgba(200,168,75,0.25)" stroke-width="0.5"/>
-      <path d="M88 100 L100 100 L100 88" stroke="rgba(200,168,75,0.25)" stroke-width="0.5"/>
-      <!-- Corner dots -->
-      <circle cx="2.5" cy="2.5" r="1" fill="rgba(200,168,75,0.3)"/>
-      <circle cx="97.5" cy="2.5" r="1" fill="rgba(200,168,75,0.3)"/>
-      <circle cx="2.5" cy="97.5" r="1" fill="rgba(200,168,75,0.3)"/>
-      <circle cx="97.5" cy="97.5" r="1" fill="rgba(200,168,75,0.3)"/>
-    </svg>
-  </div>
+  <div class="cover-ring"></div><div class="cover-ring"></div>
+  <div class="cover-ring"></div><div class="cover-ring"></div>
+  <div class="cover-glow-rose"></div>
+  <div class="cover-glow-gold"></div>
 
-  <!-- Botanical Illustration -->
-  <svg class="cover-botanical" viewBox="0 0 200 180" fill="none">
-    <!-- Central stem -->
-    <path d="M100 170 Q95 140 100 110 Q105 80 100 50" stroke="#4a7a4c" stroke-width="1.2" fill="none" opacity="0.7"/>
-    <!-- Left branches -->
-    <path d="M100 130 Q75 115 55 120" stroke="#4a7a4c" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <path d="M100 105 Q78 88 60 90" stroke="#4a7a4c" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <path d="M100 80 Q80 65 62 68" stroke="#4a7a4c" stroke-width="0.8" fill="none" opacity="0.5"/>
-    <!-- Right branches -->
-    <path d="M100 130 Q125 115 145 120" stroke="#4a7a4c" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <path d="M100 105 Q122 88 140 90" stroke="#4a7a4c" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <path d="M100 80 Q120 65 138 68" stroke="#4a7a4c" stroke-width="0.8" fill="none" opacity="0.5"/>
-    <!-- Leaves -->
-    <ellipse cx="50" cy="119" rx="12" ry="6" fill="#2d4a2f" opacity="0.5" transform="rotate(-15,50,119)"/>
-    <ellipse cx="57" cy="89" rx="11" ry="5.5" fill="#2d4a2f" opacity="0.45" transform="rotate(-20,57,89)"/>
-    <ellipse cx="60" cy="67" rx="10" ry="5" fill="#2d4a2f" opacity="0.4" transform="rotate(-25,60,67)"/>
-    <ellipse cx="150" cy="119" rx="12" ry="6" fill="#2d4a2f" opacity="0.5" transform="rotate(15,150,119)"/>
-    <ellipse cx="143" cy="89" rx="11" ry="5.5" fill="#2d4a2f" opacity="0.45" transform="rotate(20,143,89)"/>
-    <ellipse cx="140" cy="67" rx="10" ry="5" fill="#2d4a2f" opacity="0.4" transform="rotate(25,140,67)"/>
-    <!-- Central flower -->
-    <circle cx="100" cy="46" r="10" fill="none" stroke="rgba(200,168,75,0.4)" stroke-width="0.8"/>
-    <circle cx="100" cy="46" r="5" fill="rgba(200,168,75,0.25)"/>
-    <circle cx="100" cy="46" r="2" fill="rgba(200,168,75,0.6)"/>
-    <!-- Petals -->
-    <ellipse cx="100" cy="33" rx="4" ry="7" fill="rgba(200,168,75,0.18)" transform="rotate(0,100,46)"/>
-    <ellipse cx="100" cy="33" rx="4" ry="7" fill="rgba(200,168,75,0.18)" transform="rotate(45,100,46)"/>
-    <ellipse cx="100" cy="33" rx="4" ry="7" fill="rgba(200,168,75,0.18)" transform="rotate(90,100,46)"/>
-    <ellipse cx="100" cy="33" rx="4" ry="7" fill="rgba(200,168,75,0.18)" transform="rotate(135,100,46)"/>
-    <ellipse cx="100" cy="33" rx="4" ry="7" fill="rgba(200,168,75,0.18)" transform="rotate(180,100,46)"/>
-    <ellipse cx="100" cy="33" rx="4" ry="7" fill="rgba(200,168,75,0.18)" transform="rotate(225,100,46)"/>
-    <ellipse cx="100" cy="33" rx="4" ry="7" fill="rgba(200,168,75,0.18)" transform="rotate(270,100,46)"/>
-    <ellipse cx="100" cy="33" rx="4" ry="7" fill="rgba(200,168,75,0.18)" transform="rotate(315,100,46)"/>
-    <!-- Gold accent dots -->
-    <circle cx="55" cy="119" r="1.5" fill="rgba(200,168,75,0.4)"/>
-    <circle cx="62" cy="89" r="1.5" fill="rgba(200,168,75,0.35)"/>
-    <circle cx="145" cy="119" r="1.5" fill="rgba(200,168,75,0.4)"/>
-    <circle cx="138" cy="89" r="1.5" fill="rgba(200,168,75,0.35)"/>
+  <svg class="cover-logo" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M100 10 L110 40 L100 20 L90 40 Z" fill="#e8998e" opacity="0.75"/>
+    <circle cx="100" cy="60" r="35" stroke="#e8998e" stroke-width="0.7" opacity="0.5"/>
+    <circle cx="100" cy="60" r="45" stroke="#c9736a" stroke-width="0.4" opacity="0.3"/>
+    <path d="M40 60 Q70 35 100 60 Q130 85 160 60" stroke="#e8d5a3" stroke-width="0.8" fill="none" opacity="0.55"/>
+    <path d="M40 60 Q70 85 100 60 Q130 35 160 60" stroke="#e8d5a3" stroke-width="0.8" fill="none" opacity="0.55"/>
+    <circle cx="100" cy="60" r="4" fill="#e8998e" opacity="0.9"/>
+    <path d="M55 45 L60 55 L55 52 L50 55 Z" fill="#e8d5a3" opacity="0.5"/>
+    <path d="M145 45 L150 55 L145 52 L140 55 Z" fill="#e8d5a3" opacity="0.5"/>
   </svg>
 
-  <div class="cover-rule-top">
-    <div class="cover-rule-line"></div>
-    <div class="cover-rule-diamond"></div>
-    <div class="cover-rule-line rev"></div>
-  </div>
   <div class="cover-eyebrow">A Wedding Celebration</div>
   <div class="cover-names">Varun &amp; Ishita</div>
-  <div class="cover-tagline">Together is a beautiful place to be</div>
-  <div class="cover-rule-bot">
-    <div class="cover-rule-line"></div>
-    <div class="cover-rule-diamond"></div>
-    <div class="cover-rule-line rev"></div>
-  </div>
-  <div class="cover-date-block">
-    <div class="cover-date-num">25 · 26 · 27</div>
-    <div class="cover-date-label">April · 2026 · Nainital & Delhi</div>
-  </div>
+  <div class="cover-tagline">Together is a beautiful place to be.</div>
+  <div class="cover-date">April 25 – 27 · 2026</div>
+  <div class="cover-line"></div>
   <button class="cover-btn" id="open-btn">Open Invitation</button>
 </div>
 
@@ -620,32 +691,48 @@ footer::before {
 
   <!-- HERO -->
   <div class="hero">
-    <!-- Watermark -->
-    <div class="hero-watermark">
-      <svg viewBox="0 0 400 300" fill="none">
-        <text x="200" y="180" font-family="Pinyon Script" font-size="160" fill="rgba(74,122,76,1)" text-anchor="middle">V&amp;I</text>
-      </svg>
-    </div>
+    <div class="hero-bg-text">V &amp; I</div>
 
-    <!-- Ornate Crest -->
-    <div class="hero-crest">
-      <svg width="260" height="48" viewBox="0 0 260 48" fill="none">
-        <line x1="0" y1="24" x2="96" y2="24" stroke="url(#g1)" stroke-width="0.7"/>
+    <!-- Corner ornaments -->
+    <svg class="hero-corner tl" viewBox="0 0 80 80" fill="none">
+      <path d="M4 76 L4 4 L76 4" stroke="rgba(201,115,106,0.3)" stroke-width="1" fill="none"/>
+      <path d="M4 4 L18 4 M4 4 L4 18" stroke="rgba(201,115,106,0.5)" stroke-width="1.5" fill="none"/>
+      <circle cx="4" cy="4" r="2" fill="rgba(201,115,106,0.5)"/>
+    </svg>
+    <svg class="hero-corner tr" viewBox="0 0 80 80" fill="none">
+      <path d="M4 76 L4 4 L76 4" stroke="rgba(201,115,106,0.3)" stroke-width="1" fill="none"/>
+      <path d="M4 4 L18 4 M4 4 L4 18" stroke="rgba(201,115,106,0.5)" stroke-width="1.5" fill="none"/>
+      <circle cx="4" cy="4" r="2" fill="rgba(201,115,106,0.5)"/>
+    </svg>
+    <svg class="hero-corner bl" viewBox="0 0 80 80" fill="none">
+      <path d="M4 76 L4 4 L76 4" stroke="rgba(201,115,106,0.3)" stroke-width="1" fill="none"/>
+      <path d="M4 4 L18 4 M4 4 L4 18" stroke="rgba(201,115,106,0.5)" stroke-width="1.5" fill="none"/>
+      <circle cx="4" cy="4" r="2" fill="rgba(201,115,106,0.5)"/>
+    </svg>
+    <svg class="hero-corner br" viewBox="0 0 80 80" fill="none">
+      <path d="M4 76 L4 4 L76 4" stroke="rgba(201,115,106,0.3)" stroke-width="1" fill="none"/>
+      <path d="M4 4 L18 4 M4 4 L4 18" stroke="rgba(201,115,106,0.5)" stroke-width="1.5" fill="none"/>
+      <circle cx="4" cy="4" r="2" fill="rgba(201,115,106,0.5)"/>
+    </svg>
+
+    <div class="hero-orn">
+      <svg width="240" height="38" viewBox="0 0 240 38" fill="none">
+        <line x1="0" y1="19" x2="95" y2="19" stroke="url(#rg1)" stroke-width="0.6"/>
         <defs>
-          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="rgba(200,168,75,0)"/><stop offset="100%" stop-color="rgba(200,168,75,0.45)"/></linearGradient>
-          <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="rgba(200,168,75,0.45)"/><stop offset="100%" stop-color="rgba(200,168,75,0)"/></linearGradient>
+          <linearGradient id="rg1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="rgba(201,115,106,0)"/>
+            <stop offset="100%" stop-color="rgba(201,115,106,0.45)"/>
+          </linearGradient>
+          <linearGradient id="rg2" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="rgba(201,115,106,0.45)"/>
+            <stop offset="100%" stop-color="rgba(201,115,106,0)"/>
+          </linearGradient>
         </defs>
-        <polygon points="102,24 106,17 110,24 106,31" fill="rgba(200,168,75,0.45)"/>
-        <circle cx="115" cy="24" r="3" fill="none" stroke="rgba(200,168,75,0.5)" stroke-width="0.8"/>
-        <!-- Central botanical emblem -->
-        <ellipse cx="130" cy="16" rx="5" ry="9" fill="none" stroke="rgba(74,122,76,0.6)" stroke-width="0.8"/>
-        <ellipse cx="122" cy="28" rx="9" ry="5" fill="none" stroke="rgba(74,122,76,0.5)" stroke-width="0.7"/>
-        <ellipse cx="138" cy="28" rx="9" ry="5" fill="none" stroke="rgba(74,122,76,0.5)" stroke-width="0.7"/>
-        <circle cx="130" cy="24" r="3.5" fill="none" stroke="rgba(200,168,75,0.55)" stroke-width="0.9"/>
-        <circle cx="130" cy="24" r="1.2" fill="rgba(200,168,75,0.6)"/>
-        <circle cx="145" cy="24" r="3" fill="none" stroke="rgba(200,168,75,0.5)" stroke-width="0.8"/>
-        <polygon points="150,24 154,17 158,24 154,31" fill="rgba(200,168,75,0.45)"/>
-        <line x1="164" y1="24" x2="260" y2="24" stroke="url(#g2)" stroke-width="0.7"/>
+        <polygon points="101,19 105,13 109,19 105,25" fill="#e8998e" opacity="0.5"/>
+        <circle cx="120" cy="19" r="7" stroke="#e8998e" stroke-width="0.8" opacity="0.55"/>
+        <circle cx="120" cy="19" r="2.5" fill="#e8998e" opacity="0.75"/>
+        <polygon points="131,19 135,13 139,19 135,25" fill="#e8998e" opacity="0.5"/>
+        <line x1="145" y1="19" x2="240" y2="19" stroke="url(#rg2)" stroke-width="0.6"/>
       </svg>
     </div>
 
@@ -655,53 +742,49 @@ footer::before {
       <span class="hero-amp">&amp;</span>
       Ishita
     </div>
-    <div class="hero-divider">
-      <div class="hero-div-line"></div>
-      <span class="hero-div-leaf">✦</span>
-      <div class="hero-div-line rev"></div>
+    <div class="hero-rule">
+      <div class="hero-rule-line"></div>
+      <div class="hero-rule-diamond"></div>
+      <div class="hero-rule-line"></div>
     </div>
-    <div class="hero-tagline">Together with their beloved families,<br>they joyfully request the honour of your presence</div>
-    <div class="hero-date-badge">April 25 – 27 &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; Nainital &amp; Delhi</div>
+    <div class="hero-tagline">Together with their families, they joyfully request the honour of your presence</div>
+    <div class="hero-badge">April 25 – 27 &nbsp;·&nbsp; 2026</div>
     <div class="hero-scroll"><span>Scroll</span><div class="hero-scroll-line"></div></div>
   </div>
 
   <div class="section-sep"></div>
 
   <!-- INVITATION MESSAGE -->
-  <div class="band-alt">
+  <div class="invite-band">
     <div class="section-wrap">
-      <div class="s-eyebrow sr">With Great Joy</div>
-      <div class="s-title sr">You Are Invited</div>
-      <div class="s-orn sr"><div class="s-orn-line"></div><span class="s-orn-leaf">✦</span><div class="s-orn-line rev"></div></div>
-      <p class="s-body sr">Together with their beloved families, Varun and Ishita joyfully invite you to witness and celebrate the beginning of their forever. Your presence is the most precious gift you could bring to this cherished celebration of love.</p>
+      <div class="section-eyebrow sr">With Great Joy</div>
+      <div class="section-title sr">You Are Invited</div>
+      <div class="section-orn sr"><div class="orn-line"></div><div class="orn-c"><div class="orn-dot"></div><div class="orn-diamond"></div><div class="orn-dot"></div></div><div class="orn-line"></div></div>
+      <p class="section-body sr">Together with their beloved families, Varun and Ishita joyfully invite you to witness and celebrate the beginning of their forever. Your presence is the greatest gift you could bestow upon them on this most cherished day.</p>
     </div>
   </div>
-
-  <div class="section-sep"></div>
 
   <!-- PHOTO -->
   <div class="photo-band">
     <div class="section-wrap" style="padding-bottom:0">
-      <div class="s-eyebrow sr">Our Story</div>
-      <div class="s-title sr">A Love to Remember</div>
-      <div class="s-orn sr"><div class="s-orn-line"></div><span class="s-orn-leaf">✦</span><div class="s-orn-line rev"></div></div>
+      <div class="section-eyebrow sr">Our Story</div>
+      <div class="section-title sr">A Love to Remember</div>
+      <div class="section-orn sr"><div class="orn-line"></div><div class="orn-c"><div class="orn-dot"></div><div class="orn-diamond"></div><div class="orn-dot"></div></div><div class="orn-line"></div></div>
     </div>
     <div class="photo-grid">
       <div class="photo-card sr"><div class="photo-placeholder"><div class="pp-sym">I</div><div class="pp-lbl">Photo</div></div></div>
       <div class="photo-card sr"><div class="photo-placeholder"><div class="pp-sym">♡</div><div class="pp-lbl">Together</div></div></div>
       <div class="photo-card sr"><div class="photo-placeholder"><div class="pp-sym">V</div><div class="pp-lbl">Photo</div></div></div>
     </div>
-    <p style="text-align:center;font-family:'EB Garamond',serif;font-style:italic;color:rgba(200,168,75,.3);font-size:clamp(.78rem,1vw + .45rem,.9rem);letter-spacing:.2em;margin-top:22px;padding:0 24px">Add your photographs to personalise this invitation</p>
+    <p style="text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(201,115,106,.35);font-size:.8rem;letter-spacing:.25em;margin-top:26px;padding:0 24px 0">Add your photographs to personalise this invitation</p>
   </div>
-
-  <div class="section-sep"></div>
 
   <!-- COUNTDOWN -->
   <div class="countdown-band">
     <div class="section-wrap" style="padding-bottom:0;max-width:700px">
-      <div class="s-eyebrow sr">Counting Down To Mehndi Night</div>
-      <div class="s-title sr">The Celebrations Begin</div>
-      <div class="s-orn sr"><div class="s-orn-line"></div><span class="s-orn-leaf">✦</span><div class="s-orn-line rev"></div></div>
+      <div class="section-eyebrow sr">Counting Down To Mehndi Night</div>
+      <div class="section-title sr">The Celebrations Begin</div>
+      <div class="section-orn sr"><div class="orn-line"></div><div class="orn-c"><div class="orn-dot"></div><div class="orn-diamond"></div><div class="orn-dot"></div></div><div class="orn-line"></div></div>
     </div>
     <div class="countdown-grid">
       <div class="cd-card sr"><div class="cd-num" id="cd-days">000</div><div class="cd-sep"></div><div class="cd-label">Days</div></div>
@@ -709,59 +792,55 @@ footer::before {
       <div class="cd-card sr"><div class="cd-num" id="cd-mins">00</div><div class="cd-sep"></div><div class="cd-label">Minutes</div></div>
       <div class="cd-card sr"><div class="cd-num" id="cd-secs">00</div><div class="cd-sep"></div><div class="cd-label">Seconds</div></div>
     </div>
-    <p class="cd-note">Saturday, April 25 · Mehndi Night · 6:00 PM · Swiss Cottage, Nainital</p>
+    <p class="cd-note">Saturday, April 25, 2026 &nbsp;·&nbsp; Mehndi Night &nbsp;·&nbsp; 6:00 PM</p>
   </div>
 
   <!-- EVENTS -->
   <div class="events-band">
     <div class="section-wrap" style="padding-bottom:0">
-      <div class="s-eyebrow sr">Save the Date</div>
-      <div class="s-title sr">Our Celebrations</div>
-      <div class="s-orn sr"><div class="s-orn-line"></div><span class="s-orn-leaf">✦</span><div class="s-orn-line rev"></div></div>
+      <div class="section-eyebrow sr">Save the Date</div>
+      <div class="section-title sr">Our Celebrations</div>
+      <div class="section-orn sr"><div class="orn-line"></div><div class="orn-c"><div class="orn-dot"></div><div class="orn-diamond"></div><div class="orn-dot"></div></div><div class="orn-line"></div></div>
     </div>
     <div class="events-grid">
 
       <div class="ev-card mehndi sr">
-        <svg class="ev-corner tl" viewBox="0 0 40 40" fill="none"><path d="M2 38 L2 2 L38 2" stroke="rgba(123,96,184,0.4)" stroke-width="1"/><circle cx="2" cy="2" r="1.5" fill="rgba(123,96,184,0.4)"/></svg>
-        <svg class="ev-corner br" viewBox="0 0 40 40" fill="none"><path d="M2 38 L2 2 L38 2" stroke="rgba(123,96,184,0.4)" stroke-width="1"/><circle cx="2" cy="2" r="1.5" fill="rgba(123,96,184,0.4)"/></svg>
+        <div class="ev-watermark">M</div>
         <div class="ev-content">
           <div class="ev-badge"><div class="ev-badge-dot"></div>Mehndi Ceremony</div>
           <div class="ev-title">Mehndi Night</div>
           <div class="ev-divider"></div>
-          <div class="ev-info"><strong>Saturday, April 25, 2026</strong><br>6:00 PM onwards<br><br>Swiss Cottage<br>Mallital, Nainital</div>
+          <div class="ev-info"><strong>Saturday, April 25</strong><br>6:00 PM onwards<br><br>Venue &middot; Swiss Cottage<br>Mallital, Nainital</div>
         </div>
       </div>
 
       <div class="ev-card haldi sr">
-        <svg class="ev-corner tl" viewBox="0 0 40 40" fill="none"><path d="M2 38 L2 2 L38 2" stroke="rgba(200,144,32,0.4)" stroke-width="1"/><circle cx="2" cy="2" r="1.5" fill="rgba(200,144,32,0.4)"/></svg>
-        <svg class="ev-corner br" viewBox="0 0 40 40" fill="none"><path d="M2 38 L2 2 L38 2" stroke="rgba(200,144,32,0.4)" stroke-width="1"/><circle cx="2" cy="2" r="1.5" fill="rgba(200,144,32,0.4)"/></svg>
+        <div class="ev-watermark">H</div>
         <div class="ev-content">
           <div class="ev-badge"><div class="ev-badge-dot"></div>Haldi &amp; Jaggo Night</div>
           <div class="ev-title">Haldi &amp; Jaggo</div>
           <div class="ev-divider"></div>
-          <div class="ev-info"><strong>Sunday, April 26, 2026</strong><br>11:00 AM onwards<br><br>Swiss Cottage<br>Mallital, Nainital</div>
+          <div class="ev-info"><strong>Sunday, April 26</strong><br>11:00 AM onwards<br><br>Venue &middot; Swiss Cottage<br>Mallital, Nainital</div>
         </div>
       </div>
 
       <div class="ev-card wedding sr">
-        <svg class="ev-corner tl" viewBox="0 0 40 40" fill="none"><path d="M2 38 L2 2 L38 2" stroke="rgba(74,122,76,0.4)" stroke-width="1"/><circle cx="2" cy="2" r="1.5" fill="rgba(74,122,76,0.4)"/></svg>
-        <svg class="ev-corner br" viewBox="0 0 40 40" fill="none"><path d="M2 38 L2 2 L38 2" stroke="rgba(74,122,76,0.4)" stroke-width="1"/><circle cx="2" cy="2" r="1.5" fill="rgba(74,122,76,0.4)"/></svg>
+        <div class="ev-watermark">W</div>
         <div class="ev-content">
           <div class="ev-badge"><div class="ev-badge-dot"></div>The Wedding Ceremony</div>
           <div class="ev-title">Wedding Day</div>
           <div class="ev-divider"></div>
-          <div class="ev-info"><strong>Monday, April 27, 2026</strong><br>1:00 PM<br><br>Royal Hotel Mallital<br>Nainital</div>
+          <div class="ev-info"><strong>Monday, April 27</strong><br>01:00 PM<br><br>Royal Hotel Mallital<br>Nainital</div>
         </div>
       </div>
 
       <div class="ev-card recep sr">
-        <svg class="ev-corner tl" viewBox="0 0 40 40" fill="none"><path d="M2 38 L2 2 L38 2" stroke="rgba(138,56,56,0.4)" stroke-width="1"/><circle cx="2" cy="2" r="1.5" fill="rgba(138,56,56,0.4)"/></svg>
-        <svg class="ev-corner br" viewBox="0 0 40 40" fill="none"><path d="M2 38 L2 2 L38 2" stroke="rgba(138,56,56,0.4)" stroke-width="1"/><circle cx="2" cy="2" r="1.5" fill="rgba(138,56,56,0.4)"/></svg>
+        <div class="ev-watermark">R</div>
         <div class="ev-content">
           <div class="ev-badge"><div class="ev-badge-dot"></div>Wedding Reception</div>
           <div class="ev-title">The Reception</div>
           <div class="ev-divider"></div>
-          <div class="ev-info"><strong>Thursday, May 1, 2026</strong><br>7:00 PM onwards<br><br>Starland Banquet<br>A-98, Mayapuri, Delhi</div>
+          <div class="ev-info"><strong>Thursday, May 1st</strong><br>7:00 PM onwards<br><br>Starland Banquet<br>A-98, Mayapuri, Delhi</div>
         </div>
       </div>
 
@@ -771,10 +850,10 @@ footer::before {
   <!-- FOOTER -->
   <footer>
     <div class="footer-big">Varun &amp; Ishita</div>
-    <div class="footer-sub">April 2026</div>
+    <div class="footer-sub">April 27 · 2026</div>
     <div class="footer-hr">
       <div class="footer-hr-line"></div>
-      <span class="footer-leaf">✦</span>
+      <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
       <div class="footer-hr-line"></div>
     </div>
     <div class="footer-credit">Made with love · Digital Wedding Invitation</div>
@@ -792,125 +871,119 @@ document.getElementById('open-btn').addEventListener('click', () => {
 });
 
 /* ── COUNTDOWN ── */
-const TARGET = new Date('2026-04-25T18:00:00');
-function pad(n,w){return String(n).padStart(w,'0');}
-function updateCountdown(){
+const TARGET = new Date('2026-04-25T19:00:00');
+function pad(n, w) { return String(n).padStart(w, '0'); }
+function updateCountdown() {
   const diff = TARGET - Date.now();
-  const els = {days:document.getElementById('cd-days'),hours:document.getElementById('cd-hours'),mins:document.getElementById('cd-mins'),secs:document.getElementById('cd-secs')};
-  if(diff<=0){['days','hours','mins','secs'].forEach(k=>els[k].textContent=k==='days'?'000':'00');return;}
-  const d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
-  const ns=pad(s,2); const changed=els.secs.textContent!==ns;
-  els.days.textContent=pad(d,3); els.hours.textContent=pad(h,2); els.mins.textContent=pad(m,2); els.secs.textContent=ns;
-  if(changed){els.secs.classList.add('flash');setTimeout(()=>els.secs.classList.remove('flash'),280);}
+  const els = {
+    days: document.getElementById('cd-days'),
+    hours: document.getElementById('cd-hours'),
+    mins: document.getElementById('cd-mins'),
+    secs: document.getElementById('cd-secs'),
+  };
+  if (diff <= 0) {
+    ['days','hours','mins','secs'].forEach(k => els[k].textContent = k==='days'?'000':'00');
+    return;
+  }
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor((diff%86400000)/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  const ns = pad(s,2);
+  const changed = els.secs.textContent !== ns;
+  els.days.textContent = pad(d,3);
+  els.hours.textContent = pad(h,2);
+  els.mins.textContent = pad(m,2);
+  els.secs.textContent = ns;
+  if (changed) {
+    els.secs.classList.add('flash');
+    setTimeout(() => els.secs.classList.remove('flash'), 280);
+  }
 }
-updateCountdown(); setInterval(updateCountdown,1000);
+updateCountdown();
+setInterval(updateCountdown, 1000);
 
 /* ── SCROLL REVEAL ── */
-const io = new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1});
-document.querySelectorAll('.sr').forEach(el=>io.observe(el));
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.11 });
+document.querySelectorAll('.sr').forEach(el => io.observe(el));
 
-/* ── PETALS — Forest & Gold ── */
-function startPetals(){
-  const canvas=document.getElementById('petals-canvas');
-  const ctx=canvas.getContext('2d');
-  const resize=()=>{canvas.width=innerWidth;canvas.height=innerHeight;};
-  resize(); addEventListener('resize',resize);
-  /* Forest botanical colours: gold leaf, sage, ivory petal, moss */
-  const colors=['#c8a84b','#e2cc88','#b0c8b2','#faf7ee','#4a7a4c','#d4c890'];
-  const shapes=['leaf','petal','dot'];
-  const petals=Array.from({length:42},()=>({
-    x:Math.random()*innerWidth, y:Math.random()*-innerHeight*1.5,
-    size:Math.random()*5+2, speed:Math.random()*0.45+0.14,
-    drift:Math.random()*0.55-0.28, rot:Math.random()*Math.PI*2,
-    rotS:(Math.random()-.5)*0.02, opacity:Math.random()*0.28+0.04,
-    color:colors[Math.floor(Math.random()*colors.length)],
-    shape:shapes[Math.floor(Math.random()*shapes.length)],
-    wob:Math.random()*Math.PI*2, wobS:Math.random()*0.016+0.005,
+/* ── PETALS — rose gold palette ── */
+function startPetals() {
+  const canvas = document.getElementById('petals-canvas');
+  const ctx = canvas.getContext('2d');
+  const resize = () => { canvas.width = innerWidth; canvas.height = innerHeight; };
+  resize(); addEventListener('resize', resize);
+
+  /* Rose gold + champagne + blush petal colours */
+  const colors = ['#e8998e','#c9736a','#f2ddd8','#e8d5a3','#d4907a','#f7ede4'];
+  const petals = Array.from({ length: 45 }, () => ({
+    x: Math.random() * innerWidth,
+    y: Math.random() * -innerHeight * 1.5,
+    size: Math.random() * 6 + 2,
+    speed: Math.random() * 0.5 + 0.15,
+    drift: Math.random() * 0.6 - 0.3,
+    rot: Math.random() * Math.PI * 2,
+    rotS: (Math.random() - 0.5) * 0.022,
+    opacity: Math.random() * 0.3 + 0.06,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    wob: Math.random() * Math.PI * 2,
+    wobS: Math.random() * 0.018 + 0.005,
   }));
-  function drawPetal(p){
-    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
-    ctx.globalAlpha=p.opacity; ctx.fillStyle=p.color;
-    if(p.shape==='leaf'){
-      ctx.beginPath(); ctx.ellipse(0,0,p.size*.5,p.size*1.6,0,0,Math.PI*2); ctx.fill();
-    } else if(p.shape==='petal'){
-      ctx.beginPath(); ctx.ellipse(0,0,p.size*.7,p.size*1.2,0,0,Math.PI*2); ctx.fill();
-    } else {
-      ctx.beginPath(); ctx.arc(0,0,p.size*.5,0,Math.PI*2); ctx.fill();
-    }
-    ctx.restore();
-  }
-  (function loop(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    petals.forEach(p=>{
-      p.wob+=p.wobS; p.y+=p.speed; p.x+=p.drift+Math.sin(p.wob)*.28; p.rot+=p.rotS;
-      if(p.y>canvas.height+16){p.y=-14;p.x=Math.random()*canvas.width;}
-      drawPetal(p);
+
+  (function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    petals.forEach(p => {
+      p.wob += p.wobS; p.y += p.speed; p.x += p.drift + Math.sin(p.wob) * 0.3; p.rot += p.rotS;
+      if (p.y > canvas.height + 16) { p.y = -14; p.x = Math.random() * canvas.width; }
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.globalAlpha = p.opacity; ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.ellipse(0, 0, p.size * 0.55, p.size * 1.55, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
     });
     requestAnimationFrame(loop);
   })();
 }
 
-/* ── MUSIC — Different melody: waltz in D major (bright, celebratory) ── */
-let audioCtx=null, playing=false, musicTimer=null, nodes=[];
-
-/* D major waltz with harp-like arpeggios */
-const MELODY2 = [
-  /* Phrase 1 — D major ascending */
-  [293.66,0,.5],[329.63,.5,.4],[369.99,1,.4],[440,1.4,.6],
-  [493.88,2,.5],[440,2.5,.4],[369.99,3,.4],[329.63,3.4,.6],
-  /* Phrase 2 — G major turn */
-  [293.66,4,.5],[349.23,4.5,.4],[392,5,.4],[349.23,5.4,.4],
-  [329.63,5.8,.4],[293.66,6.2,.6],
-  /* Phrase 3 — rise */
-  [440,7,.5],[493.88,7.5,.4],[523.25,8,.4],[587.33,8.4,.6],
-  [523.25,9,.4],[493.88,9.4,.4],[440,9.8,1.2],
+/* ── MUSIC ── */
+let audioCtx = null, playing = false, musicTimer = null, nodes = [];
+const MELODY = [
+  [329.63,0,.5],[261.63,.5,.5],[293.66,1,.5],[329.63,1.5,.5],[349.23,2,.5],[329.63,2.5,.5],
+  [293.66,3,.5],[261.63,3.5,.5],[220,4,1],[261.63,5,.5],[293.66,5.5,.5],[329.63,6,.5],
+  [349.23,6.5,.5],[392,7,.5],[349.23,7.5,.5],[329.63,8,.5],[293.66,8.5,.5],[261.63,9,1.5],
 ];
-/* Harp arpeggio chords */
-const ARPEGGIOS = [
-  [146.83,220,293.66,369.99], /* D major */
-  [174.61,220,261.63,349.23], /* G major */
-  [164.81,220,293.66,369.99], /* D/F# */
-  [146.83,220,293.66,440],    /* D major high */
-];
-
-function note2(f,s,d,v=0.05,type='triangle'){
-  if(!audioCtx) return;
+const CHORDS = [[196,246.94,329.63],[196,246.94,329.63],[174.61,220,261.63],[196,246.94,329.63]];
+function note(f,s,d,v=0.06) {
   const o=audioCtx.createOscillator(), g=audioCtx.createGain();
   o.connect(g); g.connect(audioCtx.destination);
-  o.type=type; o.frequency.value=f;
+  o.type='sine'; o.frequency.value=f;
   const t=audioCtx.currentTime;
-  g.gain.setValueAtTime(0,t+s);
-  g.gain.linearRampToValueAtTime(v,t+s+0.04);
-  g.gain.exponentialRampToValueAtTime(0.001,t+s+d+0.3);
-  o.start(t+s); o.stop(t+s+d+0.4); nodes.push(o);
+  g.gain.setValueAtTime(0,t+s); g.gain.linearRampToValueAtTime(v,t+s+.06);
+  g.gain.linearRampToValueAtTime(0,t+s+d);
+  o.start(t+s); o.stop(t+s+d+.1); nodes.push(o);
 }
-
-function musicLoop2(){
-  if(!playing) return;
-  /* Melody — gentle sine */
-  MELODY2.forEach(([f,s,d])=>note2(f,s,d,0.065,'sine'));
-  /* Harp arpeggios — softer triangle */
-  ARPEGGIOS.forEach((chord,i)=>{
-    chord.forEach((f,j)=>note2(f, i*2.75 + j*0.12, 2.5, 0.016, 'triangle'));
-  });
-  musicTimer=setTimeout(musicLoop2, 11000);
+function musicLoop() {
+  if (!playing) return;
+  MELODY.forEach(([f,s,d])=>note(f,s,d,.07));
+  CHORDS.forEach((ch,i)=>ch.forEach(f=>note(f,i*2.625,2.5,.021)));
+  musicTimer=setTimeout(musicLoop,10500);
 }
-
-function startMusic(){
-  if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-  if(audioCtx.state==='suspended') audioCtx.resume();
+function startMusic() {
+  if (!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if (audioCtx.state==='suspended') audioCtx.resume();
   playing=true;
   document.getElementById('music-btn').classList.add('playing');
   document.getElementById('music-icon').innerHTML='<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
-  musicLoop2();
+  musicLoop();
 }
-function stopMusic(){
+function stopMusic() {
   playing=false; clearTimeout(musicTimer);
   document.getElementById('music-btn').classList.remove('playing');
   document.getElementById('music-icon').innerHTML='<path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>';
   nodes.forEach(n=>{try{n.stop();}catch(e){}}); nodes=[];
 }
-document.getElementById('music-btn').addEventListener('click',()=>playing?stopMusic():startMusic());
+document.getElementById('music-btn').addEventListener('click', ()=>playing?stopMusic():startMusic());
 </script>
 </body>
 </html>
