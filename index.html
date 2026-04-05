@@ -349,6 +349,12 @@ body {
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;
   background:linear-gradient(155deg, #4a2020 0%, #3a1818 100%);
 }
+/* Real photo styles — applied automatically when you add an <img class="photo-img"> */
+.photo-img {
+  width:100%; height:100%;
+  object-fit:cover; object-position:center top;
+  display:block;
+}
 .pp-sym { font-family:'Great Vibes',cursive; font-size:3.5rem; color:rgba(201,115,106,.22); display:block; padding:0.1em; }
 .pp-lbl { font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.42em; color:rgba(201,115,106,.3); text-transform:uppercase; }
 
@@ -423,7 +429,15 @@ body {
   background:linear-gradient(to right,transparent,rgba(201,115,106,.2),transparent);
 }
 .events-band::before{top:0;} .events-band::after{bottom:0;}
-.events-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; max-width:900px; margin:56px auto 0; }
+.events-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:960px; margin:56px auto 0; }
+/* Bottom 2 cards centered */
+.events-grid .ev-card:nth-child(4) { grid-column: 1; }
+.events-grid .ev-card:nth-child(5) { grid-column: 2; }
+@media(max-width:760px) {
+  .events-grid { grid-template-columns:repeat(2,1fr); }
+  .events-grid .ev-card:nth-child(4) { grid-column: auto; }
+  .events-grid .ev-card:nth-child(5) { grid-column: auto; }
+}
 @media(max-width:640px) { .events-grid { grid-template-columns:1fr; } }
 
 .ev-card {
@@ -438,6 +452,7 @@ body {
 .ev-card:nth-child(2){transition-delay:.12s;}
 .ev-card:nth-child(3){transition-delay:.24s;}
 .ev-card:nth-child(4){transition-delay:.36s;}
+.ev-card:nth-child(5){transition-delay:.48s;}
 .ev-card:hover {
   border-color:rgba(201,115,106,.4);
   box-shadow:0 12px 48px rgba(201,115,106,.18), 0 2px 8px rgba(0,0,0,.1);
@@ -460,6 +475,7 @@ body {
 
 .ev-card.mehndi  { --ev-gradient: linear-gradient(to right,#7b5ea8,#b8a0d8); }
 .ev-card.haldi   { --ev-gradient: linear-gradient(to right,#b87220,#e8b86a); }
+.ev-card.jaggo   { --ev-gradient: linear-gradient(to right,#c0392b,#e87070); }
 .ev-card.wedding { --ev-gradient: linear-gradient(to right,var(--rg-deep),var(--rg-bright)); }
 .ev-card.recep   { --ev-gradient: linear-gradient(to right,#2a6655,#6ab8a0); }
 
@@ -487,6 +503,7 @@ body {
 }
 .ev-card.mehndi  .ev-title { color:#5c3a9e; }
 .ev-card.haldi   .ev-title { color:#8a5800; }
+.ev-card.jaggo   .ev-title { color:#9e2020; }
 .ev-card.wedding .ev-title { color: var(--rg-deep); }
 .ev-card.recep   .ev-title { color:#1e6655; }
 
@@ -631,7 +648,7 @@ footer         { padding: clamp(48px,7vw,88px) clamp(16px,4vw,48px) clamp(32px,4
   .events-grid { grid-template-columns:1fr; gap:14px; }
   .ev-card { padding:28px 22px; }
   .ev-title { font-size:2.3rem; }
-  .ev-card:nth-child(2),.ev-card:nth-child(3),.ev-card:nth-child(4) { transition-delay:0s; }
+  .ev-card:nth-child(2),.ev-card:nth-child(3),.ev-card:nth-child(4),.ev-card:nth-child(5) { transition-delay:0s; }
   .ev-watermark { font-size:4rem; }
   .countdown-grid { grid-template-columns:repeat(2,1fr); gap:10px; max-width:320px; }
   .cd-num { font-size:clamp(2rem,9vw,2.8rem); }
@@ -772,9 +789,21 @@ footer         { padding: clamp(48px,7vw,88px) clamp(16px,4vw,48px) clamp(32px,4
       <div class="section-orn sr"><div class="orn-line"></div><div class="orn-c"><div class="orn-dot"></div><div class="orn-diamond"></div><div class="orn-dot"></div></div><div class="orn-line"></div></div>
     </div>
     <div class="photo-grid">
-      <div class="photo-card sr"><div class="photo-placeholder"><div class="pp-sym">I</div><div class="pp-lbl">Photo</div></div></div>
-      <div class="photo-card sr"><div class="photo-placeholder"><div class="pp-sym">♡</div><div class="pp-lbl">Together</div></div></div>
-      <div class="photo-card sr"><div class="photo-placeholder"><div class="pp-sym">V</div><div class="pp-lbl">Photo</div></div></div>
+      <div class="photo-card sr">
+        <!-- To add your photo: replace the placeholder div below with:
+             <img src="YOUR_PHOTO_URL" alt="Ishita" class="photo-img"> -->
+        <div class="photo-placeholder"><div class="pp-sym">I</div><div class="pp-lbl">Add Photo</div></div>
+      </div>
+      <div class="photo-card sr">
+        <!-- To add your photo: replace the placeholder div below with:
+             <img src="YOUR_PHOTO_URL" alt="Together" class="photo-img"> -->
+        <div class="photo-placeholder"><div class="pp-sym">♡</div><div class="pp-lbl">Add Photo</div></div>
+      </div>
+      <div class="photo-card sr">
+        <!-- To add your photo: replace the placeholder div below with:
+             <img src="YOUR_PHOTO_URL" alt="Varun" class="photo-img"> -->
+        <div class="photo-placeholder"><div class="pp-sym">V</div><div class="pp-lbl">Add Photo</div></div>
+      </div>
     </div>
     <p style="text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(201,115,106,.35);font-size:.8rem;letter-spacing:.25em;margin-top:26px;padding:0 24px 0">Add your photographs to personalise this invitation</p>
   </div>
@@ -817,10 +846,20 @@ footer         { padding: clamp(48px,7vw,88px) clamp(16px,4vw,48px) clamp(32px,4
       <div class="ev-card haldi sr">
         <div class="ev-watermark">H</div>
         <div class="ev-content">
-          <div class="ev-badge"><div class="ev-badge-dot"></div>Haldi &amp; Jaggo Night</div>
-          <div class="ev-title">Haldi &amp; Jaggo</div>
+          <div class="ev-badge"><div class="ev-badge-dot"></div>Haldi</div>
+          <div class="ev-title">Haldi</div>
           <div class="ev-divider"></div>
           <div class="ev-info"><strong>Sunday, April 26</strong><br>11:00 AM onwards<br><br>Venue &middot; Swiss Cottage<br>Mallital, Nainital</div>
+        </div>
+      </div>
+
+      <div class="ev-card jaggo sr">
+        <div class="ev-watermark">J</div>
+        <div class="ev-content">
+          <div class="ev-badge"><div class="ev-badge-dot"></div>Jaggo Night</div>
+          <div class="ev-title">Jaggo Night</div>
+          <div class="ev-divider"></div>
+          <div class="ev-info"><strong>Sunday, April 26</strong><br>7:00 PM onwards<br><br>Venue &middot; Swiss Cottage<br>Mallital, Nainital</div>
         </div>
       </div>
 
@@ -830,7 +869,7 @@ footer         { padding: clamp(48px,7vw,88px) clamp(16px,4vw,48px) clamp(32px,4
           <div class="ev-badge"><div class="ev-badge-dot"></div>The Wedding Ceremony</div>
           <div class="ev-title">Wedding Day</div>
           <div class="ev-divider"></div>
-          <div class="ev-info"><strong>Monday, April 27</strong><br>01:00 PM<br><br>Royal Hotel Mallital<br>Nainital</div>
+          <div class="ev-info"><strong>Monday, April 27</strong><br>03:00 PM<br><br>Royal Hotel Mallital<br>Nainital</div>
         </div>
       </div>
 
