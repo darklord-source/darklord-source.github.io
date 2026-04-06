@@ -327,36 +327,55 @@ body {
   background:linear-gradient(to right,transparent,rgba(201,115,106,.2),transparent);
 }
 .photo-band::before { top:0; } .photo-band::after { bottom:0; }
-.photo-grid {
-  display:grid; grid-template-columns:1fr 1.15fr 1fr;
-  gap:6px; max-width:840px; margin:50px auto 0; padding:0 24px;
+
+/* Single centered photo */
+.photo-single {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto 0;
+  padding: 0 24px;
 }
-@media(max-width:560px) { .photo-grid { grid-template-columns:1fr 1fr; } }
-.photo-card {
-  aspect-ratio:2/3; overflow:hidden; position:relative;
-  opacity:0; transform:translateY(28px) scale(.97); transition:all .9s cubic-bezier(.4,0,.2,1);
+.photo-card-single {
+  width: min(380px, 88vw);
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(201,115,106,.25);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.35),
+    0 0 0 4px rgba(44,16,16,.8),
+    0 0 0 5px rgba(201,115,106,.15);
+  opacity: 0;
+  transform: translateY(28px) scale(.97);
+  transition: all 1s cubic-bezier(.4,0,.2,1);
 }
-.photo-card.in { opacity:1; transform:translateY(0) scale(1); }
-.photo-card:nth-child(2) { transition-delay:.15s; }
-.photo-card:nth-child(3) { transition-delay:.3s; }
-.photo-card::before {
-  content:''; position:absolute; inset:0; z-index:1;
-  border:1px solid rgba(201,115,106,.2); transition:border-color .4s;
+.photo-card-single.in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
-.photo-card:hover::before { border-color:rgba(201,115,106,.5); }
-.photo-placeholder {
-  width:100%; height:100%;
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;
-  background:linear-gradient(155deg, #4a2020 0%, #3a1818 100%);
+.photo-card-single:hover {
+  box-shadow:
+    0 28px 80px rgba(0,0,0,.45),
+    0 0 0 4px rgba(44,16,16,.8),
+    0 0 0 5px rgba(201,115,106,.35);
+  transform: translateY(-4px) scale(1.01);
 }
-/* Real photo styles — applied automatically when you add an <img class="photo-img"> */
-.photo-img {
-  width:100%; height:100%;
-  object-fit:cover; object-position:center top;
-  display:block;
+/* The actual photo */
+.photo-card-single img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
 }
-.pp-sym { font-family:'Great Vibes',cursive; font-size:3.5rem; color:rgba(201,115,106,.22); display:block; padding:0.1em; }
-.pp-lbl { font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.42em; color:rgba(201,115,106,.3); text-transform:uppercase; }
+/* Rose-gold frame overlay on top of image */
+.photo-card-single::after {
+  content: '';
+  position: absolute; inset: 0;
+  border: 1px solid rgba(201,115,106,.2);
+  pointer-events: none;
+  z-index: 1;
+}
 
 /* ══════════════════════════════════════════
    COUNTDOWN
@@ -600,7 +619,6 @@ footer         { padding: clamp(48px,7vw,88px) clamp(16px,4vw,48px) clamp(32px,4
   .ev-title { font-size:2.2rem; }
   .countdown-grid { max-width:560px; gap:12px; }
   .cd-num { font-size:clamp(2.2rem,7vw,3.6rem); }
-  .photo-grid { max-width:700px; gap:5px; }
   .section-wrap { max-width:760px; }
 }
 
@@ -618,7 +636,7 @@ footer         { padding: clamp(48px,7vw,88px) clamp(16px,4vw,48px) clamp(32px,4
   .cd-num { font-size:clamp(1.8rem,6vw,3rem); }
   .cd-card { padding:22px 8px 18px; }
   .cd-label { font-size:.48rem; }
-  .photo-grid { grid-template-columns:1fr 1.1fr 1fr; gap:4px; }
+  .photo-card-single { width: min(340px, 85vw); }
   .orn-line { width:45px; }
   .cover-tagline { letter-spacing:.25em; font-size:.58rem; }
 }
@@ -654,8 +672,7 @@ footer         { padding: clamp(48px,7vw,88px) clamp(16px,4vw,48px) clamp(32px,4
   .cd-num { font-size:clamp(2rem,9vw,2.8rem); }
   .cd-card { padding:20px 8px 16px; }
   .cd-note { font-size:.82rem; padding:0 16px; }
-  .photo-grid { grid-template-columns:1fr 1fr; gap:4px; }
-  .photo-card:nth-child(3) { display:none; }
+  .photo-card-single { width: min(300px, 82vw); }
   .footer-big { font-size:clamp(2.8rem,10vw,5rem); }
   #music-btn { bottom:20px; right:20px; width:46px; height:46px; }
 }
@@ -697,6 +714,7 @@ footer         { padding: clamp(48px,7vw,88px) clamp(16px,4vw,48px) clamp(32px,4
 </div>
 
 <!-- MUSIC -->
+<audio id="bgm" src="bgm.mp3" loop preload="auto"></audio>
 <button id="music-btn" aria-label="Toggle music">
   <div class="mr mr1"></div><div class="mr mr2"></div>
   <svg id="music-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
@@ -788,24 +806,11 @@ footer         { padding: clamp(48px,7vw,88px) clamp(16px,4vw,48px) clamp(32px,4
       <div class="section-title sr">A Love to Remember</div>
       <div class="section-orn sr"><div class="orn-line"></div><div class="orn-c"><div class="orn-dot"></div><div class="orn-diamond"></div><div class="orn-dot"></div></div><div class="orn-line"></div></div>
     </div>
-    <div class="photo-grid">
-      <div class="photo-card sr">
-        <!-- To add your photo: replace the placeholder div below with:
-             <img src="YOUR_PHOTO_URL" alt="Ishita" class="photo-img"> -->
-        <div class="photo-placeholder"><div class="pp-sym">I</div><div class="pp-lbl">Add Photo</div></div>
-      </div>
-      <div class="photo-card sr">
-        <!-- To add your photo: replace the placeholder div below with:
-             <img src="YOUR_PHOTO_URL" alt="Together" class="photo-img"> -->
-        <div class="photo-placeholder"><div class="pp-sym">♡</div><div class="pp-lbl">Add Photo</div></div>
-      </div>
-      <div class="photo-card sr">
-        <!-- To add your photo: replace the placeholder div below with:
-             <img src="YOUR_PHOTO_URL" alt="Varun" class="photo-img"> -->
-        <div class="photo-placeholder"><div class="pp-sym">V</div><div class="pp-lbl">Add Photo</div></div>
+    <div class="photo-single">
+      <div class="photo-card-single sr">
+        <img src="VI1.jpeg" alt="Varun &amp; Ishita">
       </div>
     </div>
-    <p style="text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(201,115,106,.35);font-size:.8rem;letter-spacing:.25em;margin-top:26px;padding:0 24px 0">Add your photographs to personalise this invitation</p>
   </div>
 
   <!-- COUNTDOWN -->
@@ -906,7 +911,7 @@ document.getElementById('open-btn').addEventListener('click', () => {
   document.getElementById('cover').classList.add('hidden');
   document.getElementById('main').classList.add('visible');
   startPetals();
-  setTimeout(startMusic, 900);
+  setTimeout(startMusic, 900);  /* slight delay so cover fade finishes first */
 });
 
 /* ── COUNTDOWN ── */
@@ -985,44 +990,28 @@ function startPetals() {
   })();
 }
 
-/* ── MUSIC ── */
-let audioCtx = null, playing = false, musicTimer = null, nodes = [];
-const MELODY = [
-  [329.63,0,.5],[261.63,.5,.5],[293.66,1,.5],[329.63,1.5,.5],[349.23,2,.5],[329.63,2.5,.5],
-  [293.66,3,.5],[261.63,3.5,.5],[220,4,1],[261.63,5,.5],[293.66,5.5,.5],[329.63,6,.5],
-  [349.23,6.5,.5],[392,7,.5],[349.23,7.5,.5],[329.63,8,.5],[293.66,8.5,.5],[261.63,9,1.5],
-];
-const CHORDS = [[196,246.94,329.63],[196,246.94,329.63],[174.61,220,261.63],[196,246.94,329.63]];
-function note(f,s,d,v=0.06) {
-  const o=audioCtx.createOscillator(), g=audioCtx.createGain();
-  o.connect(g); g.connect(audioCtx.destination);
-  o.type='sine'; o.frequency.value=f;
-  const t=audioCtx.currentTime;
-  g.gain.setValueAtTime(0,t+s); g.gain.linearRampToValueAtTime(v,t+s+.06);
-  g.gain.linearRampToValueAtTime(0,t+s+d);
-  o.start(t+s); o.stop(t+s+d+.1); nodes.push(o);
-}
-function musicLoop() {
-  if (!playing) return;
-  MELODY.forEach(([f,s,d])=>note(f,s,d,.07));
-  CHORDS.forEach((ch,i)=>ch.forEach(f=>note(f,i*2.625,2.5,.021)));
-  musicTimer=setTimeout(musicLoop,10500);
-}
+/* ── MUSIC — bgm.mp3 ── */
+const bgm = document.getElementById('bgm');
+bgm.volume = 0.7;
+
 function startMusic() {
-  if (!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-  if (audioCtx.state==='suspended') audioCtx.resume();
-  playing=true;
-  document.getElementById('music-btn').classList.add('playing');
-  document.getElementById('music-icon').innerHTML='<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
-  musicLoop();
+  bgm.play().then(() => {
+    document.getElementById('music-btn').classList.add('playing');
+    document.getElementById('music-icon').innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+  }).catch(() => {
+    /* Autoplay blocked — user will need to tap the button manually */
+  });
 }
+
 function stopMusic() {
-  playing=false; clearTimeout(musicTimer);
+  bgm.pause();
   document.getElementById('music-btn').classList.remove('playing');
-  document.getElementById('music-icon').innerHTML='<path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>';
-  nodes.forEach(n=>{try{n.stop();}catch(e){}}); nodes=[];
+  document.getElementById('music-icon').innerHTML = '<path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>';
 }
-document.getElementById('music-btn').addEventListener('click', ()=>playing?stopMusic():startMusic());
+
+document.getElementById('music-btn').addEventListener('click', () => {
+  if (bgm.paused) startMusic(); else stopMusic();
+});
 </script>
 </body>
 </html>
