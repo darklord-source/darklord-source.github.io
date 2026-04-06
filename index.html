@@ -460,14 +460,15 @@ body {
 @media(max-width:640px) { .events-grid { grid-template-columns:1fr; } }
 
 .ev-card {
-  background:var(--card-bg);
+  background: #fdf6f0;  /* hardcoded — Safari can misread CSS vars in stacking contexts */
   border:1px solid rgba(201,115,106,.2);
   padding:40px 36px; position:relative; overflow:hidden;
   opacity:0; transform:translateY(26px);
   transition:opacity .9s ease, transform .9s ease, border-color .4s, box-shadow .4s;
   box-shadow: 0 2px 20px rgba(0,0,0,.15);
+  -webkit-transform:translateY(26px); /* Safari needs prefixed transform for transitions */
 }
-.ev-card.in { opacity:1; transform:translateY(0); }
+.ev-card.in { opacity:1; transform:translateY(0); -webkit-transform:translateY(0); }
 .ev-card:nth-child(2){transition-delay:.12s;}
 .ev-card:nth-child(3){transition-delay:.24s;}
 .ev-card:nth-child(4){transition-delay:.36s;}
@@ -475,7 +476,7 @@ body {
 .ev-card:hover {
   border-color:rgba(201,115,106,.4);
   box-shadow:0 12px 48px rgba(201,115,106,.18), 0 2px 8px rgba(0,0,0,.1);
-  transform:translateY(-2px);
+  transform:translateY(-2px); -webkit-transform:translateY(-2px);
 }
 
 /* Shimmer on hover */
@@ -486,17 +487,18 @@ body {
 }
 .ev-card:hover::before { left:160%; }
 
-/* Top accent stripe — gradient */
+/* Top accent stripe — Safari-safe: direct rules per card, no CSS vars in pseudo-elements */
 .ev-card::after {
-  content:''; position:absolute; top:0; left:0; right:0; height:3px;
-  background:var(--ev-gradient, linear-gradient(to right, var(--rg-deep), var(--rg-bright)));
+  content:''; position:absolute; top:0; left:0; right:0; height:4px;
+  background: linear-gradient(to right, #8a3d38, #e8998e); /* default: rose gold */
 }
+.ev-card.mehndi::after  { background: linear-gradient(to right,#7b5ea8,#b8a0d8); }
+.ev-card.haldi::after   { background: linear-gradient(to right,#b87220,#e8b86a); }
+.ev-card.jaggo::after   { background: linear-gradient(to right,#c0392b,#e87070); }
+.ev-card.wedding::after { background: linear-gradient(to right,#8a3d38,#e8998e); }
+.ev-card.recep::after   { background: linear-gradient(to right,#2a6655,#6ab8a0); }
 
-.ev-card.mehndi  { --ev-gradient: linear-gradient(to right,#7b5ea8,#b8a0d8); }
-.ev-card.haldi   { --ev-gradient: linear-gradient(to right,#b87220,#e8b86a); }
-.ev-card.jaggo   { --ev-gradient: linear-gradient(to right,#c0392b,#e87070); }
-.ev-card.wedding { --ev-gradient: linear-gradient(to right,var(--rg-deep),var(--rg-bright)); }
-.ev-card.recep   { --ev-gradient: linear-gradient(to right,#2a6655,#6ab8a0); }
+/* Remove CSS variable declarations — not needed anymore */
 
 .ev-content { position:relative; z-index:1; }
 
@@ -514,21 +516,22 @@ body {
   text-transform:uppercase; color:var(--text-muted-lt);
   margin-bottom:14px; opacity:.75;
 }
-.ev-badge-dot { width:4px; height:4px; background:var(--rg); border-radius:50%; }
+.ev-badge-dot { width:4px; height:4px; background:#c9736a; border-radius:50%; }  /* hardcoded rg */
 
 .ev-title {
   font-family:'Great Vibes',cursive; font-size:2.7rem;
-  line-height:1.15; margin-bottom:16px;
+  line-height:1.15; margin-bottom:16px; padding:0.05em 0;
 }
+
 .ev-card.mehndi  .ev-title { color:#5c3a9e; }
 .ev-card.haldi   .ev-title { color:#8a5800; }
 .ev-card.jaggo   .ev-title { color:#9e2020; }
-.ev-card.wedding .ev-title { color: var(--rg-deep); }
+.ev-card.wedding .ev-title { color:#8a3d38; }  /* hardcoded rg-deep */
 .ev-card.recep   .ev-title { color:#1e6655; }
 
-.ev-divider { width:36px; height:1px; background:var(--rg); opacity:.2; margin-bottom:16px; }
-.ev-info { font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.95; color:var(--text-muted-lt); font-style:italic; }
-.ev-info strong { font-style:normal; font-weight:600; color:var(--text-on-light); letter-spacing:.02em; }
+.ev-divider { width:36px; height:1px; background:#c9736a; opacity:.2; margin-bottom:16px; }
+.ev-info { font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.95; color:#7a4a44; font-style:italic; }
+.ev-info strong { font-style:normal; font-weight:600; color:#3a1a18; letter-spacing:.02em; }
 
 /* ══════════════════════════════════════════
    FOOTER
