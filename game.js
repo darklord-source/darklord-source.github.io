@@ -48,6 +48,40 @@ let isRunning = false;
 let isPaused = false;
 let eatPulse = 0; // animation counter
 
+// Particles for eat animation
+const particles = [];
+function spawnParticles(cellX, cellY, count=18){
+  const cx = cellX*CELL_SIZE + CELL_SIZE/2; const cy = cellY*CELL_SIZE + CELL_SIZE/2;
+  for(let i=0;i<count;i++){
+    const angle = Math.random()*Math.PI*2; const s = 1 + Math.random()*2.2;
+    particles.push({ x: cx, y: cy, vx: Math.cos(angle)*s, vy: Math.sin(angle)*s - 1.2, life: 0.9 + Math.random()*0.9, size: 2 + Math.random()*4, color: `hsl(${Math.floor(320+Math.random()*40)},80%,60%)` });
+  }
+  // visual beat pulse
+  triggerBeatPulse(0.14);
+}
+function updateParticles(dt){
+  for(let i=particles.length-1;i>=0;i--){
+    const p = particles[i];
+    p.vy += 6 * dt; // gravity
+    p.vx *= 0.995; p.vy *= 0.995;
+    p.x += p.vx * CELL_SIZE * dt * 12; p.y += p.vy * CELL_SIZE * dt * 12;
+    p.life -= dt * 1.2;
+    if(p.life <= 0) particles.splice(i,1);
+  }
+}
+function drawParticles(){
+  for(const p of particles){
+    ctx.globalAlpha = Math.max(0, Math.min(1, p.life));
+    ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
+// Beat / music pulse animation
+let beatPulse = 0;
+function triggerBeatPulse(amount=0.12){ beatPulse = Math.max(beatPulse, amount); }
+function updateBeatPulse(dt){ beatPulse = Math.max(0, beatPulse - dt * 1.4); }
+
 // Audio (WebAudio)
 let audioCtx = null;
 function ensureAudio(){
@@ -68,6 +102,21 @@ function playBeep(freq=440, duration=0.08, type='sine', gain=0.08){
 }
 function playEat(){ ensureAudio(); playBeep(780, 0.09, 'sawtooth', 0.08); }
 function playGameOver(){ ensureAudio(); playBeep(160, 0.2, 'sine', 0.12); playBeep(120, 0.15, 'sine', 0.10); }
+
+// Simple WebAudio background music loop + beat (scheduler)
+let music = { running:false, intervalId:null, bpm:100, masterGain:null, musicGain:null };
+function setupMusicNodes(){
+  if(!audioCtx) return;
+  if(music.masterGain) return;
+  music.masterGain = audioCtx.createGain(); music.musicGain = audioCtx.createGain();
+  music.masterGain.gain.value = 0.9; music.musicGain.gain.value = 0.12;
+  music.musicGain.connect(music.masterGain); music.masterGain.connect(audioCtx.destination);
+}
+function playKick(time){ if(!audioCtx) return; const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(120, time); o.frequency.exponentialRampToValueAtTime(40, time + 0.14); g.gain.setValueAtTime(0.9, time); g.gain.exponentialRampToValueAtTime(0.001, time + 0.18); o.connect(g); g.connect(music.masterGain); o.start(time); o.stop(time + 0.18); }
+function playSynthNote(time, freq, dur=0.18){ if(!audioCtx) return; const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.type = 'sawtooth'; o.frequency.setValueAtTime(freq, time); g.gain.setValueAtTime(0.0, time); g.gain.linearRampToValueAtTime(0.12, time + 0.01); g.gain.exponentialRampToValueAtTime(0.001, time + dur); o.connect(g); g.connect(music.musicGain); o.start(time); o.stop(time + dur + 0.02); }
+function scheduleMusic(){ if(!audioCtx || !music.masterGain) return; const lookAhead = 0.06; const now = audioCtx.currentTime; const beatInterval = 60 / music.bpm; playKick(now + lookAhead); playSynthNote(now + lookAhead + 0.02, 220, 0.22); playSynthNote(now + lookAhead + beatInterval*0.5, 330, 0.22); playSynthNote(now + lookAhead + beatInterval*0.75, 440, 0.22); triggerBeatPulse(0.08); }
+function startMusic(){ ensureAudio(); setupMusicNodes(); if(music.running) return; music.running = true; music.intervalId = setInterval(scheduleMusic, Math.max(150, (60/music.bpm)*1000)); const btn = document.getElementById('musicToggle'); if(btn){ btn.textContent='Music: On'; btn.setAttribute('aria-pressed','true'); btn.classList.add('active'); } }
+function stopMusic(){ if(music.intervalId) clearInterval(music.intervalId); music.intervalId=null; music.running=false; if(music.masterGain){ try{ music.masterGain.disconnect(); }catch(e){} } music.masterGain=null; music.musicGain=null; const btn = document.getElementById('musicToggle'); if(btn){ btn.textContent='Music: Off'; btn.setAttribute('aria-pressed','false'); btn.classList.remove('active'); } }
 
 // Storage: single top scorer object {name,score,date}
 function getTop(){
@@ -139,6 +188,9 @@ function draw(){
     drawCell(food.x, food.y, '#ff6b6b', '#7f2b2b', scale);
   }
 
+  // particles (under snake for glow)
+  if(particles.length) drawParticles();
+
   // snake with gradient head
   for(let i=snake.length-1;i>=0;i--){
     const s = snake[i];
@@ -169,7 +221,7 @@ function step(){
   snake.unshift(head);
 
   if(food && head.x === food.x && head.y === food.y){
-    score += 10; speed += SPEED_INCREASE_PER_FOOD/10; eatPulse = 6; playEat(); placeFood();
+    score += 10; speed += SPEED_INCREASE_PER_FOOD/10; eatPulse = 6; playEat(); spawnParticles(food.x, food.y); placeFood();
     // speed change will affect next interval
     startTickLoop();
   } else { snake.pop(); }
@@ -177,7 +229,6 @@ function step(){
   scoreEl.textContent = score;
   speedDisplay.textContent = speed.toFixed(1);
   if(eatPulse > 0) eatPulse = Math.max(0, eatPulse - 0.28);
-  draw();
 }
 
 function gameOver(){
@@ -240,7 +291,7 @@ function hideNameModal(){ nameModal.classList.add('hidden'); }
 function saveNameAndScore(){ const name = playerNameInput.value.trim() || 'Anon'; saveTop({name, score, date: (new Date()).toISOString()}); hideNameModal(); updateBestDisplay(); showScores(); }
 
 // initialization
-updateBestDisplay(); resetGame(); draw();
+updateBestDisplay(); resetGame();
 
 // event wiring
 window.addEventListener('keydown', handleKey);
@@ -253,6 +304,22 @@ saveNameBtn.addEventListener('click', saveNameAndScore);
 skipSaveBtn.addEventListener('click', ()=>{ hideNameModal(); updateBestDisplay(); });
 playerNameInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') saveNameAndScore(); });
 nameModal.addEventListener('click', (e)=>{ if(e.target === nameModal) return; });
+
+// music toggle wiring (button added to UI)
+const musicBtn = document.getElementById('musicToggle');
+if(musicBtn){ musicBtn.addEventListener('click', ()=>{ ensureAudio(); if(music.running) stopMusic(); else startMusic(); }); }
+
+// Render loop using requestAnimationFrame
+let lastFrameTime = performance.now();
+function render(now){
+  const dt = Math.min(0.05, (now - lastFrameTime)/1000);
+  lastFrameTime = now;
+  updateParticles(dt);
+  updateBeatPulse(dt);
+  draw();
+  requestAnimationFrame(render);
+}
+requestAnimationFrame(render);
 
 // responsive canvas sizing
 function fitCanvas(){

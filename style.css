@@ -60,3 +60,8 @@ footer{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
 /* Ensure overlays (modals) are also visible in fullscreen */
 :fullscreen .modal, :-webkit-full-screen .modal { z-index:999999 }
 
+/* Music toggle and canvas glow */
+#musicToggle{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:10px;color:var(--muted);cursor:pointer;margin-top:8px}
+#musicToggle.active{background:linear-gradient(90deg,var(--accent-2),var(--accent));border:none;color:#022}
+.canvas-glow{position:absolute;inset:0;pointer-events:none;border-radius:18px;box-shadow:0 30px 120px rgba(0,180,150,0.06), inset 0 -40px 120px rgba(0,0,0,0.6)}
+
