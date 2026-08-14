@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Retro Snake — Modern</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <h1>Retro Snake</h1>
+      <div class="top-info">
+        <div class="score-row">Score: <strong id="score">0</strong></div>
+        <div class="score-row">Top: <strong id="bestName">—</strong> <span id="bestScore">0</span></div>
+      </div>
+    </header>
+
+    <section class="board-area">
+      <div class="canvas-wrap">
+        <canvas id="gameCanvas" width="480" height="480" aria-label="Snake game canvas"></canvas>
+
+        <!-- Mobile D-Pad (shown on small screens) -->
+        <div class="dpad" id="dpad">
+          <button class="dir up" id="btnUp" aria-label="Up">▲</button>
+          <div class="dpad-row">
+            <button class="dir left" id="btnLeft" aria-label="Left">◀</button>
+            <button class="dir right" id="btnRight" aria-label="Right">▶</button>
+          </div>
+          <button class="dir down" id="btnDown" aria-label="Down">▼</button>
+        </div>
+      </div>
+
+      <aside class="controls">
+        <div class="panel">
+          <div class="label">Speed</div>
+          <div class="value" id="speedDisplay">1.0</div>
+        </div>
+
+        <div class="panel buttons">
+          <button id="newGame" class="primary">New Game</button>
+          <button id="pauseBtn">Pause</button>
+          <button id="showScores">Top Scorer</button>
+          <button id="clearScores">Clear</button>
+        </div>
+      </aside>
+    </section>
+
+    <section id="scoresPanel" class="scores hidden" aria-hidden="true">
+      <h2>Top Scorer</h2>
+      <div id="scoresList" class="top-only">No top scorer yet.</div>
+      <button id="closeScores">Close</button>
+    </section>
+
+    <div id="nameModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-content">
+        <h2 id="modalTitle">New Top Score!</h2>
+        <p>Your score: <strong id="finalScore">0</strong></p>
+        <label for="playerName">Enter your name:</label>
+        <input id="playerName" maxlength="20" placeholder="Your name" inputmode="text" />
+        <div class="modal-buttons">
+          <button id="saveName" class="primary">Save</button>
+          <button id="skipSave">Skip</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Controls: Arrow keys or WASD. Swipe on mobile or use the on-screen D‑pad. Sounds and simple animations included.</p>
+    </footer>
+  </main>
+
+  <script src="game.js" defer></script>
+</body>
+</html>
