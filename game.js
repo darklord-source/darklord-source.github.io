@@ -273,5 +273,32 @@ window.addEventListener('resize', fitCanvas); fitCanvas();
 // allow first user interaction to initialize audio context (some browsers require gesture)
 ['touchstart','mousedown','keydown'].forEach(ev=> window.addEventListener(ev, ensureAudio, {once:true}));
 
+// On mobile, start the game on first meaningful pointerdown and request fullscreen
+(function setupAutoStart(){
+  function tryEnterFullscreen(){
+    const el = canvas.parentElement || document.documentElement;
+    const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+    if(req){ try{ req.call(el); }catch(e){} }
+  }
+
+  function onFirstPointer(e){
+    // ignore if modal is showing
+    if(nameModal && !nameModal.classList.contains('hidden')) return;
+    // start audio, fit canvas, request fullscreen, then start game
+    ensureAudio();
+    fitCanvas();
+    tryEnterFullscreen();
+    // small delay to ensure fullscreen/audiocontext settle
+    setTimeout(()=>{
+      if(!isRunning) startGame();
+    }, 10);
+    // hide mobile hint if present
+    const tapHint = document.getElementById('tapHint'); if(tapHint) tapHint.style.display = 'none';
+  }
+
+  // add as once so it only triggers on the first user gesture
+  canvas.addEventListener('pointerdown', onFirstPointer, {once:true, passive:true});
+})();
+
 // expose small API
 window.__retroSnake = { getTop, saveTop, clearTop };

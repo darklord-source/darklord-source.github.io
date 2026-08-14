@@ -49,3 +49,14 @@ footer{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
   canvas{width:92vw;height:92vw}
   .dpad{display:flex}
 }
+
+/* Fullscreen styling for immersive mobile experience */
+:fullscreen .canvas-wrap, :-webkit-full-screen .canvas-wrap, :-moz-full-screen .canvas-wrap {
+  width:100vw; height:100vh; padding:0; margin:0; display:flex; align-items:center; justify-content:center; background:transparent;
+}
+:fullscreen #gameCanvas, :-webkit-full-screen #gameCanvas, :-moz-full-screen #gameCanvas {
+  width:100vw !important; height:100vh !important; max-width:none; max-height:none; border-radius:0 !important;
+}
+/* Ensure overlays (modals) are also visible in fullscreen */
+:fullscreen .modal, :-webkit-full-screen .modal { z-index:999999 }
+
