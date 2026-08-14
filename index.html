@@ -5,6 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Retro Snake — Modern</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Mobile-friendly and more graphical theme overrides */
+    :root{
+      --bg-1: #071428;
+      --bg-2: #0f3150;
+      --accent: #00e0a8;
+      --accent-2: #35b7ff;
+      --panel: rgba(255,255,255,0.04);
+      --glass: rgba(255,255,255,0.03);
+    }
+
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{background:linear-gradient(180deg,var(--bg-1),var(--bg-2));color:#e6f7ff;display:flex;align-items:center;justify-content:center}
+    main.container{width:100%;max-width:980px;padding:16px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .topbar h1{margin:0;font-size:1.4rem;letter-spacing:0.6px;color:var(--accent)}
+    .top-info{display:flex;gap:14px;align-items:center}
+    .score-row{background:var(--panel);padding:8px 12px;border-radius:10px;font-weight:600;color:#dffbf0}
+
+    .board-area{display:flex;gap:12px;align-items:flex-start}
+    .canvas-wrap{position:relative;flex:1;display:flex;align-items:center;justify-content:center}
+
+    /* Make canvas responsive */
+    #gameCanvas{width:100%;max-width:640px;height:auto;display:block;border-radius:18px;box-shadow:0 8px 30px rgba(0,0,0,0.6);background:linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.1));-webkit-tap-highlight-color:transparent}
+
+    /* Decorative overlay grid to look more graphical */
+    .canvas-wrap::before{content:"";position:absolute;inset:0;border-radius:18px;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);background-size:24px 24px;mix-blend-mode:overlay}
+
+    /* D-pad hidden by default; keep for accessibility but visually subtle */
+    .dpad{position:absolute;right:14px;bottom:14px;display:flex;flex-direction:column;gap:6px;background:var(--glass);padding:8px;border-radius:12px;backdrop-filter:blur(6px)}
+    .dpad button{background:transparent;border:0;color:#cfeee6;font-size:18px;padding:6px 8px;border-radius:8px}
+
+    /* On small screens hide dpad and show the new 'tap-to-turn' hint */
+    @media (max-width:720px){
+      .dpad{display:none}
+      .controls{display:none}
+      main.container{padding:10px}
+    }
+
+    .controls{width:280px}
+    .panel{background:var(--panel);padding:12px;border-radius:12px}
+    .buttons{display:flex;flex-direction:column;gap:8px}
+    button.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:0;padding:10px;border-radius:10px;color:#012;cursor:pointer}
+
+    footer{margin-top:14px;text-align:center;color:rgba(230,247,255,0.7)}
+
+    /* Mobile hint */
+    .tap-hint{position:absolute;left:50%;transform:translateX(-50%);top:12px;background:linear-gradient(90deg, rgba(0,0,0,0.35), rgba(255,255,255,0.02));padding:6px 10px;border-radius:999px;font-size:13px;color:#bfffe6;backdrop-filter:blur(4px)}
+  </style>
 </head>
 <body>
   <main class="container">
@@ -18,9 +67,10 @@
 
     <section class="board-area">
       <div class="canvas-wrap">
+        <div class="tap-hint" id="tapHint">Tap or swipe to turn</div>
         <canvas id="gameCanvas" width="480" height="480" aria-label="Snake game canvas"></canvas>
 
-        <!-- Mobile D-Pad (shown on small screens) -->
+        <!-- Keep D-Pad for keyboard users or accessibility, but hidden on small screens -->
         <div class="dpad" id="dpad">
           <button class="dir up" id="btnUp" aria-label="Up">▲</button>
           <div class="dpad-row">
@@ -66,10 +116,100 @@
     </div>
 
     <footer>
-      <p>Controls: Arrow keys or WASD. Swipe on mobile or use the on-screen D‑pad. Sounds and simple animations included.</p>
+      <p>Controls: Tap or swipe anywhere on the game canvas to change direction. Buttons and keyboard still work on desktop.</p>
     </footer>
   </main>
 
   <script src="game.js" defer></script>
+  <script defer>
+    // Mobile touch/swipe -> keyboard events mapping
+    (function(){
+      const canvas = document.getElementById('gameCanvas');
+      const tapHint = document.getElementById('tapHint');
+      if(!canvas) return;
+
+      // Dispatch a keyboard event to the window so the existing game.js key handlers react.
+      function sendKey(key, keyCode){
+        try{
+          const e = new KeyboardEvent('keydown', {key: key, code: key, keyCode: keyCode, which: keyCode, bubbles:true});
+          // Some handlers check keyCode directly on the event object; try to define it when possible
+          Object.defineProperty(e, 'keyCode', {value: keyCode});
+          window.dispatchEvent(e);
+        }catch(err){
+          // Fallback: create simple event
+          const evt = document.createEvent('Event');
+          evt.initEvent('keydown', true, true);
+          evt.key = key; evt.keyCode = keyCode; evt.which = keyCode;
+          window.dispatchEvent(evt);
+        }
+      }
+
+      // Simple mapping based on where the user tapped relative to canvas center
+      function tapToDir(clientX, clientY){
+        const r = canvas.getBoundingClientRect();
+        const cx = r.left + r.width/2;
+        const cy = r.top + r.height/2;
+        const dx = clientX - cx;
+        const dy = clientY - cy;
+        if(Math.abs(dx) > Math.abs(dy)){
+          if(dx > 0) sendKey('ArrowRight',39); else sendKey('ArrowLeft',37);
+        } else {
+          if(dy > 0) sendKey('ArrowDown',40); else sendKey('ArrowUp',38);
+        }
+      }
+
+      // Swipe detection
+      let startX = 0, startY = 0, tracking=false;
+      const SWIPE_MIN = 24; // pixels
+
+      canvas.addEventListener('pointerdown', function(e){
+        tracking = true; startX = e.clientX; startY = e.clientY;
+        // hide hint after first interaction
+        if(tapHint) tapHint.style.opacity = '0.35';
+      }, {passive:true});
+
+      canvas.addEventListener('pointermove', function(e){
+        if(!tracking) return;
+        // prevent accidental scrolling during swipe on mobile
+        e.preventDefault?.();
+      }, {passive:false});
+
+      canvas.addEventListener('pointerup', function(e){
+        if(!tracking) return; tracking=false;
+        const dx = e.clientX - startX; const dy = e.clientY - startY;
+        if(Math.hypot(dx,dy) >= SWIPE_MIN){
+          // swipe direction
+          if(Math.abs(dx) > Math.abs(dy)){
+            if(dx > 0) sendKey('ArrowRight',39); else sendKey('ArrowLeft',37);
+          } else {
+            if(dy > 0) sendKey('ArrowDown',40); else sendKey('ArrowUp',38);
+          }
+        } else {
+          // treat as tap
+          tapToDir(e.clientX, e.clientY);
+        }
+      }, {passive:true});
+
+      // Also support mouse clicks for desktop
+      canvas.addEventListener('click', function(e){
+        tapToDir(e.clientX, e.clientY);
+      });
+
+      // Make on-screen D-pad buttons still work by forwarding their actions
+      const map = {btnUp:['ArrowUp',38], btnDown:['ArrowDown',40], btnLeft:['ArrowLeft',37], btnRight:['ArrowRight',39]};
+      Object.keys(map).forEach(id=>{
+        const el = document.getElementById(id);
+        if(!el) return;
+        el.addEventListener('click', ()=> sendKey(map[id][0], map[id][1]));
+      });
+
+      // Accessibility: announce control model for screen readers briefly
+      try{
+        canvas.setAttribute('role','application');
+        canvas.setAttribute('aria-describedby','tapHint');
+      }catch(e){}
+
+    })();
+  </script>
 </body>
 </html>
